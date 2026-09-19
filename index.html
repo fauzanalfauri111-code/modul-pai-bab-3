@@ -1,1332 +1,469 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modul Ajar Interaktif PAI-BP SMA Kelas X Bab 3</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        emerald: {
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                        },
-                        amber: {
-                            50: '#fffbeb',
-                            100: '#fef3c7',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                        },
-                        sand: {
-                            50: '#fdfbf7',
-                            100: '#f7f4ed',
-                            200: '#ebe5d8',
-                            800: '#4a4437'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 550px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 280px;
-            max-height: 350px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 320px;
-            }
-        }
-        .tab-active {
-            border-bottom: 3px solid #059669;
-            color: #059669;
-            font-weight: 700;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#176b5f">
+<title>LKPD PAI-BP Kelas X • Mobile</title>
+<style>
+:root{
+  --primary:#176b5f;--primary2:#0e4f47;--accent:#f3b84b;
+  --bg:#f3f6f5;--card:#fff;--text:#24302d;--muted:#6a7773;
+  --line:#dce5e1;--soft:#edf6f2;--warm:#fff8e9;--danger:#b42318;
+  --shadow:0 8px 24px rgba(23,107,95,.08);--r:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.58;-webkit-text-size-adjust:100%;
+}
+button,input,textarea,select{font:inherit}
+.header{
+  background:linear-gradient(160deg,var(--primary2),var(--primary));
+  color:#fff;padding:28px 16px 24px;
+}
+.container{width:min(100%,760px);margin:auto;padding:0 14px}
+.badge{
+  display:inline-block;padding:7px 11px;border:1px solid rgba(255,255,255,.2);
+  border-radius:999px;background:rgba(255,255,255,.1);font-size:.82rem
+}
+h1{font-size:clamp(1.8rem,8vw,2.65rem);line-height:1.12;margin:14px 0 10px}
+.hero-sub{font-size:.96rem;opacity:.92}
+.quote{
+  margin-top:16px;padding:13px 14px;background:rgba(255,255,255,.09);
+  border-left:4px solid var(--accent);border-radius:0 12px 12px 0;font-size:.92rem
+}
+.appbar{
+  position:sticky;top:0;z-index:20;background:rgba(243,246,245,.95);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)
+}
+.appbar-inner{padding:9px 14px}
+.progress-row{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--muted);margin-bottom:6px}
+.bar{height:8px;background:#e2ebe7;border-radius:999px;overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:var(--primary);transition:.25s}
+.nav{
+  display:flex;gap:8px;overflow:auto;padding:9px 0 2px;scrollbar-width:none
+}
+.nav::-webkit-scrollbar{display:none}
+.nav a{
+  flex:0 0 auto;text-decoration:none;color:var(--text);background:#fff;
+  border:1px solid var(--line);padding:8px 11px;border-radius:999px;font-size:.8rem
+}
+.nav a.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+main{padding:14px 0 100px}
+.card{
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+  border-radius:var(--r);padding:18px 16px;margin:14px 0
+}
+.section-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:16px}
+.section-letter{
+  flex:none;width:36px;height:36px;border-radius:11px;background:var(--soft);
+  color:var(--primary);display:grid;place-items:center;font-weight:800
+}
+h2{font-size:1.24rem;line-height:1.25;margin:0}
+h3{font-size:1rem;margin:20px 0 9px}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+.callout{
+  padding:14px;border:1px solid #d8e9e3;background:var(--soft);
+  border-radius:14px;font-size:.94rem
+}
+label{font-weight:650;font-size:.92rem}
+input[type=text],input[type=date],textarea,select{
+  width:100%;margin-top:7px;padding:13px 12px;border:1px solid var(--line);
+  border-radius:13px;background:#fff;color:var(--text);font-size:16px;outline:none
+}
+textarea{min-height:118px;resize:vertical}
+textarea:focus,input:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,107,95,.1)}
+.grid{display:grid;gap:12px}
+.form-group{margin-top:12px}
+.choice-grid{display:grid;gap:8px;margin-top:8px}
+.choice{
+  display:flex;align-items:center;gap:10px;padding:12px 13px;border:1px solid var(--line);
+  border-radius:13px;background:#fff;cursor:pointer;font-weight:550
+}
+.choice input{width:20px;height:20px;accent-color:var(--primary);flex:none}
+.choice:has(input:checked){background:var(--soft);border-color:var(--primary)}
+.task-card{
+  border:1px solid var(--line);border-radius:15px;padding:14px;background:#fcfdfc;margin:12px 0
+}
+.task-no{
+  display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;
+  padding:0 8px;border-radius:9px;background:#f1f5f3;color:var(--primary);
+  font-weight:800;font-size:.84rem;margin-bottom:9px
+}
+.case{
+  border:1px solid var(--line);border-radius:16px;padding:15px;margin:12px 0;
+  background:#fbfcfb
+}
+.case-tag{
+  display:inline-block;padding:5px 9px;border-radius:999px;background:var(--warm);
+  color:#7f5c16;font-weight:750;font-size:.78rem
+}
+.sticky-actions{
+  position:fixed;left:0;right:0;bottom:0;z-index:25;
+  padding:9px max(12px,env(safe-area-inset-left)) calc(9px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line)
+}
+.actions{width:min(100%,760px);margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{
+  border:0;border-radius:12px;padding:12px 13px;font-weight:750;cursor:pointer;min-height:46px
+}
+.primary{background:var(--primary);color:#fff}.secondary{background:#eef2f0;color:var(--text);border:1px solid var(--line)}
+.danger{background:#fff1ef;color:var(--danger);border:1px solid #f3cbc7}
+.status{
+  position:fixed;top:76px;left:50%;transform:translateX(-50%);
+  z-index:30;background:#143f38;color:#fff;padding:10px 14px;border-radius:999px;
+  font-size:.84rem;display:none;box-shadow:var(--shadow)
+}
+footer{text-align:center;color:var(--muted);padding:25px 10px 110px}
+@media(min-width:700px){
+  .grid.two{grid-template-columns:1fr 1fr}
+  .choice-grid.two{grid-template-columns:1fr 1fr}
+}
+@media print{
+  .appbar,.sticky-actions,.status,.nav{display:none!important}
+  .header{background:#fff;color:#000;border-bottom:2px solid #222}
+  .card{box-shadow:none;break-inside:avoid}
+}
+</style>
 </head>
-<body class="bg-sand-50 text-slate-800 font-sans min-h-screen flex flex-col">
-
-    <!-- Chosen Palette: Warm Emerald & Sand Harmony (Emerald Green accents for Islamic learning theme, Warm Slate & Sand background, crisp clean typography) -->
-    <!-- Application Structure Plan: Structured into 6 core interactive modules: 1. Overview & Curriculum 2. 5 Mazmumah Deep Dive 3. Interactive Matrix & Trait Chain 4. Interactive LKPD Workshop 5. Assessment Center (25 interactive questions) 6. Digital Reflection & Commitment Generator. Chosen to allow both teachers and students to navigate seamlessly between curriculum planning, deep conceptual study, interactive case solving, self-assessment, and personal reflection. -->
-    <!-- Visualization & Content Choices: 1. Donut Chart for Time Allocation (Chart.js) 2. Radar Chart for 5 Trait Impact Profile (Chart.js) 3. Horizontal Bar Chart for Curriculum Dimension Focus (Chart.js) 4. Interactive Tabbed Panels for 5 Traits with Accordion Dalil & Case Study Modals 5. Interactive LKPD Form with Instant Guidance 6. Interactive Assessment Engine with Score Counter & Detailed Explanations. NO SVG, NO Mermaid JS. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
-    <!-- Top Navigation Header -->
-    <header class="bg-emerald-900 text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-3">
-                    <span class="bg-amber-500 text-emerald-950 font-black px-2.5 py-1 rounded text-lg">PAI</span>
-                    <div>
-                        <h1 class="font-bold text-base sm:text-lg leading-tight">Modul Ajar PAI-BP SMA Kelas X</h1>
-                        <p class="text-xs text-emerald-200 hidden sm:block">Bab 3: Menghindari Berfoya-foya, Riya, Sum'ah, Takabur, & Hasad (Kurikulum Merdeka 2026)</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-2 text-xs sm:text-sm bg-emerald-800 px-3 py-1.5 rounded-lg border border-emerald-700">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>Total 6 JP (270 Menit)</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigation Tabs Bar -->
-        <nav class="bg-emerald-800 text-emerald-100 overflow-x-auto custom-scrollbar border-t border-emerald-700">
-            <div class="max-w-7xl mx-auto flex space-x-1 sm:space-x-4 px-4 text-xs sm:text-sm font-medium whitespace-nowrap">
-                <button onclick="switchTab('kurikulum')" id="tab-kurikulum" class="py-3 px-3 transition-colors hover:text-white tab-active">
-                    📌 Kurikulum & ATP
-                </button>
-                <button onclick="switchTab('materi')" id="tab-materi" class="py-3 px-3 transition-colors hover:text-white">
-                    📖 5 Sifat Mazmumah
-                </button>
-                <button onclick="switchTab('rantai')" id="tab-rantai" class="py-3 px-3 transition-colors hover:text-white">
-                    🔗 Rantai Penyakit Hati
-                </button>
-                <button onclick="switchTab('lkpd')" id="tab-lkpd" class="py-3 px-3 transition-colors hover:text-white">
-                    ✍️ Workshop LKPD Interaktif
-                </button>
-                <button onclick="switchTab('asesmen')" id="tab-asesmen" class="py-3 px-3 transition-colors hover:text-white">
-                    📊 Bank Soal & Evaluasi
-                </button>
-                <button onclick="switchTab('refleksi')" id="tab-refleksi" class="py-3 px-3 transition-colors hover:text-white">
-                    🤲 Muhasabah & Deklarasi
-                </button>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Main Content Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
-        <!-- ================= SECTION 1: KURIKULUM & ATP ================= -->
-        <section id="sec-kurikulum" class="space-y-6">
-            <!-- Intro Paragraph -->
-            <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm">
-                <h2 class="text-xl font-bold text-emerald-900 mb-2">Perencanaan Pembelajaran & Information Architecture</h2>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                    Bagian ini menyajikan gambaran umum identitas modul, Capaian Pembelajaran (CP) Elemen Akhlak Fase E terbaru tahun 2026, Alur Tujuan Pembelajaran (ATP), serta integrasi Profil Pelajar Pancasila. Modul ini dirancang dengan pendekatan berpusat pada murid (*Student-Centered*) yang mengaitkan teks keagamaan dengan fenomena era digital seperti *flexing*, pencitraan media sosial, dan *FOMO*.
-                </p>
-            </div>
-
-            <!-- Stats & Quick Facts Cards -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center">
-                    <span class="text-xs font-semibold text-emerald-700 uppercase tracking-wider">Fase / Kelas</span>
-                    <p class="text-2xl font-black text-emerald-900 mt-1">Fase E / X</p>
-                    <span class="text-xs text-emerald-600">Jenjang SMA</span>
-                </div>
-                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
-                    <span class="text-xs font-semibold text-amber-700 uppercase tracking-wider">Alokasi Waktu</span>
-                    <p class="text-2xl font-black text-amber-900 mt-1">6 JP / 270 m</p>
-                    <span class="text-xs text-amber-600">2 Pekan (4 Pertemuan)</span>
-                </div>
-                <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl text-center">
-                    <span class="text-xs font-semibold text-blue-700 uppercase tracking-wider">Model Utama</span>
-                    <p class="text-lg font-bold text-blue-900 mt-1">PBL & CTL</p>
-                    <span class="text-xs text-blue-600">Deep Learning & Reflective</span>
-                </div>
-                <div class="bg-purple-50 border border-purple-200 p-4 rounded-xl text-center">
-                    <span class="text-xs font-semibold text-purple-700 uppercase tracking-wider">Asesmen</span>
-                    <p class="text-lg font-bold text-purple-900 mt-1">25 Soal + LKPD</p>
-                    <span class="text-xs text-purple-600">Diagnostik, Formatif, Sumatif</span>
-                </div>
-            </div>
-
-            <!-- Capaian Pembelajaran Box -->
-            <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm space-y-4">
-                <div class="flex items-center space-x-2 text-emerald-800 font-bold text-lg">
-                    <span>📜</span>
-                    <h3>Capaian Pembelajaran (CP) Elemen Akhlak - Regulasi 2026</h3>
-                </div>
-                <div class="bg-slate-50 border-l-4 border-emerald-600 p-4 rounded text-sm text-slate-700 leading-relaxed italic">
-                    "Peserta didik mampu menganalisis bahaya dan dampak negatif dari sifat-sifat mazmumah (berfoya-foya, riya, sum'ah, takabur, dan hasad) serta menghubungkannya dengan fenomena kehidupan sehari-hari dan media sosial; menampilkan sikap tawaduk, ikhlas, qana'ah, dan syukur sebagai wujud penjagaan diri dari akhlak tercela; serta mampu menyusun komitmen pribadi untuk menerapkan akhlak mahmudah dalam kehidupan bermasyarakat dan berbangsa."
-                </div>
-                <p class="text-xs text-slate-500">
-                    * Rujukan: Keputusan Kepala BKPDM Nomor 020 Tahun 2026 tentang Perubahan atas Keputusan Kepala BSKAP Nomor 046/H/KR/2025 <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-mono text-[10px]">[PERLU VERIFIKASI DOKUMEN FISIK]</span>.
-                </p>
-            </div>
-
-            <!-- Charts Section: Time Breakdown & Profile Focus -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Chart 1: Time Allocation -->
-                <div class="bg-white p-5 rounded-xl border border-sand-200 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-1 text-sm">Distribusi Alokasi Waktu (Total 270 Menit)</h4>
-                        <p class="text-xs text-slate-500 mb-3">Struktur 4 Pertemuan Pembelajaran dalam 2 Pekan</p>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="chartTimeAllocation"></canvas>
-                    </div>
-                </div>
-
-                <!-- Chart 2: Character Profile Dimensions -->
-                <div class="bg-white p-5 rounded-xl border border-sand-200 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-1 text-sm">Integrasi Profil Pelajar Pancasila</h4>
-                        <p class="text-xs text-slate-500 mb-3">Penguatan Karakter dalam Pembelajaran Bab 3</p>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="chartProfileDimensions"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Interactive Timeline ATP -->
-            <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm space-y-4">
-                <h3 class="font-bold text-emerald-900 text-lg">Alur Tujuan Pembelajaran (ATP) Mini</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Step 1 -->
-                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 relative">
-                        <span class="absolute top-3 right-3 bg-emerald-700 text-white text-xs px-2 py-0.5 rounded-full font-bold">P-1 (90m)</span>
-                        <h4 class="font-bold text-emerald-900 text-sm mb-1">1. Memahami & Menganalisis</h4>
-                        <p class="text-xs text-slate-600 mb-2">Israf, Tabzir, & Gaya Hidup Berfoya-foya pada Remaja Modern.</p>
-                        <span class="inline-block text-[11px] bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded">PBL: Problem Solving</span>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 relative">
-                        <span class="absolute top-3 right-3 bg-amber-700 text-white text-xs px-2 py-0.5 rounded-full font-bold">P-2 (45m)</span>
-                        <h4 class="font-bold text-amber-900 text-sm mb-1">2. Mengevaluasi Niat</h4>
-                        <p class="text-xs text-slate-600 mb-2">Riya & Sum'ah vs Keikhlasan di Ruang Publik Digital.</p>
-                        <span class="inline-block text-[11px] bg-amber-200 text-amber-900 px-2 py-0.5 rounded">CTL & Deep Learning</span>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 relative">
-                        <span class="absolute top-3 right-3 bg-blue-700 text-white text-xs px-2 py-0.5 rounded-full font-bold">P-3 (90m)</span>
-                        <h4 class="font-bold text-blue-900 text-sm mb-1">3. Mendiagnosis & Mengatasi</h4>
-                        <p class="text-xs text-slate-600 mb-2">Takabur (Sombong) dan Penawarnya melalui Sikap Tawaduk.</p>
-                        <span class="inline-block text-[11px] bg-blue-200 text-blue-900 px-2 py-0.5 rounded">Role-Play & Simulation</span>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 relative">
-                        <span class="absolute top-3 right-3 bg-purple-700 text-white text-xs px-2 py-0.5 rounded-full font-bold">P-4 (45m)</span>
-                        <h4 class="font-bold text-purple-900 text-sm mb-1">4. Mensintesis & Refleksi</h4>
-                        <p class="text-xs text-slate-600 mb-2">Hasad, Syukur, Qana'ah, & Deklarasi Komitmen Diri.</p>
-                        <span class="inline-block text-[11px] bg-purple-200 text-purple-900 px-2 py-0.5 rounded">Sintesis & Muhasabah</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= SECTION 2: 5 SIFAT MAZMUMAH DEEP DIVE ================= -->
-        <section id="sec-materi" class="space-y-6 hidden">
-            <!-- Intro Paragraph -->
-            <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm">
-                <h2 class="text-xl font-bold text-emerald-900 mb-2">Eksplorasi Konseptual 5 Penyakit Hati (*Akhlak Mazmumah*)</h2>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                    Setiap sub-materi di bawah ini membedah sifat mazmumah dari definisi, dalil Al-Qur'an dan Hadis shahih, bentuk perilaku di media sosial modern (seperti *flexing* dan *FOMO*), dampak buruk terhadap kesehatan spiritual, serta akhlak penawar (*akhlak mahmudah*) yang menjadi benteng diri.
-                </p>
-            </div>
-
-            <!-- Sub-tabs for 5 Traits -->
-            <div class="flex space-x-2 border-b border-sand-200 overflow-x-auto custom-scrollbar pb-2">
-                <button onclick="showTrait('foya')" id="btn-trait-foya" class="px-4 py-2 text-xs sm:text-sm font-bold rounded-lg bg-emerald-700 text-white">1. Berfoya-foya</button>
-                <button onclick="showTrait('riya')" id="btn-trait-riya" class="px-4 py-2 text-xs sm:text-sm font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">2. Riya</button>
-                <button onclick="showTrait('sumah')" id="btn-trait-sumah" class="px-4 py-2 text-xs sm:text-sm font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">3. Sum'ah</button>
-                <button onclick="showTrait('takabur')" id="btn-trait-takabur" class="px-4 py-2 text-xs sm:text-sm font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">4. Takabur</button>
-                <button onclick="showTrait('hasad')" id="btn-trait-hasad" class="px-4 py-2 text-xs sm:text-sm font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">5. Hasad</button>
-            </div>
-
-            <!-- Content Panel: 1. Berfoya-foya -->
-            <div id="trait-foya" class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm space-y-6">
-                <div class="flex justify-between items-start border-b border-slate-100 pb-4">
-                    <div>
-                        <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-full uppercase">Pertemuan 1 (Pekan 1)</span>
-                        <h3 class="text-2xl font-black text-slate-800 mt-2">Berfoya-foya (*Al-Isra' wal Tabzir*)</h3>
-                        <p class="text-sm text-slate-500">Menghambur-hamburkan harta melebihi batas kewajaran syariat dan kebutuhan.</p>
-                    </div>
-                    <span class="text-3xl">💸</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Concept Detail -->
-                    <div class="space-y-4">
-                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
-                            <h4 class="font-bold text-amber-900 text-sm mb-1">Perbedaan Israf vs Tabzir</h4>
-                            <ul class="text-xs text-amber-950 space-y-1 list-disc list-inside">
-                                <li><strong>Israf:</strong> Melampaui batas dalam menggunakan harta/makanan yang halal (berlebihan).</li>
-                                <li><strong>Tabzir:</strong> Mengeluarkan harta untuk perbuatan sia-sia, maksiat, atau tanpa ada manfaatnya sama sekali.</li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
-                            <h4 class="font-bold text-emerald-900 text-sm mb-2">Dalil Al-Qur'an (Q.S. al-Isra' / 17: 26-27)</h4>
-                            <p class="font-serif text-right text-lg font-bold text-emerald-950 leading-loose mb-2">
-                                وَلَا تُبَذِّرْ تَبْذِيرًا ۝ إِنَّ الْمُبَذِّرِينَ كَانُوا إِخْوَانَ الشَّيَاطِينِ ۖ
-                            </p>
-                            <p class="text-xs text-emerald-900 italic">
-                                "Dan janganlah kamu menghambur-hamburkan (hartamu) secara boros. Sesungguhnya pemboros-pemboros itu adalah saudara-saudara setan..."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Context & Remedy -->
-                    <div class="space-y-4">
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <h4 class="font-bold text-slate-800 text-sm mb-1">📱 Realitas Remaja Digital</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">
-                                Fenomena <em>flexing</em> barang bermerek, tren nongkrong mahal demi konten Instagram/TikTok, serta perilaku belanja impulsif akibat <em>FOMO (Fear of Missing Out)</em> tanpa memperhatikan skala prioritas keuangan.
-                            </p>
-                        </div>
-
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                            <h4 class="font-bold text-blue-900 text-sm mb-1">🛡️ Penawar (Akhlak Mahmudah)</h4>
-                            <p class="text-xs text-blue-950 font-medium">Hidup Bersahaja (Sederhana)</p>
-                            <p class="text-xs text-blue-800 mt-1">Menyusun skala prioritas (Kebutuhan > Keinginan), gemar menabung, dan memperbanyak sedekah.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Panel: 2. Riya -->
-            <div id="trait-riya" class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm space-y-6 hidden">
-                <div class="flex justify-between items-start border-b border-slate-100 pb-4">
-                    <div>
-                        <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full uppercase">Pertemuan 2 (Pekan 1)</span>
-                        <h3 class="text-2xl font-black text-slate-800 mt-2">Riya (*Syirik Khafi*)</h3>
-                        <p class="text-sm text-slate-500">Memperlihatkan amalan ibadah demi mendapatkan pujian atau pengakuan manusia.</p>
-                    </div>
-                    <span class="text-3xl">👀</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
-                            <h4 class="font-bold text-amber-900 text-sm mb-1">Jenis-jenis Riya</h4>
-                            <ul class="text-xs text-amber-950 space-y-1 list-disc list-inside">
-                                <li><strong>Riya' Jali (Nyata):</strong> Beribadah hanya jika dilihat orang lain; jika sendiri tidak dilakukan.</li>
-                                <li><strong>Riya' Khafi (Terselubung):</strong> Beribadah karena Allah, namun di hati merasa senang dan berharap disanjung saat dilihat orang.</li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
-                            <h4 class="font-bold text-emerald-900 text-sm mb-2">Dalil Al-Qur'an (Q.S. al-Ma'un / 107: 4-6)</h4>
-                            <p class="font-serif text-right text-lg font-bold text-emerald-950 leading-loose mb-2">
-                                فَوَيْلٌ لِّلْمُصَلِّينَ ۝ الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ ۝ الَّذِينَ هُمْ يُرَاءُونَ
-                            </p>
-                            <p class="text-xs text-emerald-900 italic">
-                                "Maka kecelakaanlah bagi orang-orang yang shalat, (yaitu) orang-orang yang lalai dari shalatnya, yang berbuat riya."
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <h4 class="font-bold text-slate-800 text-sm mb-1">📱 Realitas Remaja Digital</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">
-                                Mengunggah video sedang shalat malam, sedekah, atau umrah dengan niat mendapatkan jumlah *likes*, *followers*, dan komentar pujian dari netizen.
-                            </p>
-                        </div>
-
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                            <h4 class="font-bold text-blue-900 text-sm mb-1">🛡️ Penawar (Akhlak Mahmudah)</h4>
-                            <p class="text-xs text-blue-950 font-medium">Keikhlasan Niat (*Ikhlas Lillahi Ta'ala*)</p>
-                            <p class="text-xs text-blue-800 mt-1">Menjaga amalan rahasia (sirri) dan membiasakan muhasabah niat sebelum dan sesudah beramal.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Panel: 3. Sum'ah -->
-            <div id="trait-sumah" class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm space-y-6 hidden">
-                <div class="flex justify-between items-start border-b border-slate-100 pb-4">
-                    <div>
-                        <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full uppercase">Pertemuan 2 (Pekan 1)</span>
-                        <h3 class="text-2xl font-black text-slate-800 mt-2">Sum'ah</h3>
-                        <p class="text-sm text-slate-500">Menceritakan atau memperdengarkan kebaikan yang telah lalu agar nama diri dipuji.</p>
-                    </div>
-                    <span class="text-3xl">🗣️</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <div class="bg-purple-50 p-4 rounded-xl border border-purple-200">
-                            <h4 class="font-bold text-purple-900 text-sm mb-1">Beda Riya vs Sum'ah</h4>
-                            <p class="text-xs text-purple-950 leading-relaxed">
-                                <strong>Riya</strong> dipamerkan melalui penglihatan (*visual/aksi nyata saat beramal*), sedangkan <strong>Sum'ah</strong> dipamerkan melalui pendengaran (*cerita/lisan setelah amal berlalu*).
-                            </p>
-                        </div>
-
-                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
-                            <h4 class="font-bold text-emerald-900 text-sm mb-2">Dalil Hadis Shahih (H.R. Bukhari - Muslim)</h4>
-                            <p class="font-serif text-right text-lg font-bold text-emerald-950 leading-loose mb-2">
-                                مَنْ سَمَّعَ سَمَّعَ اللَّهُ بِهِ ، وَمَنْ يُرَائِي يُرَائِي اللَّهُ بِهِ
-                            </p>
-                            <p class="text-xs text-emerald-900 italic">
-                                "Barangsiapa memperdengarkan amalnya, maka Allah akan memperdengarkan keburukannya. Dan barangsiapa memperlihatkan amalnya, Allah akan memperlihatkan keburukannya."
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <h4 class="font-bold text-slate-800 text-sm mb-1">📱 Realitas Remaja Digital</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">
-                                Menceritakan kembali kebaikan di podcast, instastory, atau obrolan kelompok dengan nada memamerkan nominal donasi atau ibadah pribadi.
-                            </p>
-                        </div>
-
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                            <h4 class="font-bold text-blue-900 text-sm mb-1">🛡️ Penawar (Akhlak Mahmudah)</h4>
-                            <p class="text-xs text-blue-950 font-medium">Menjaga Lisan & Keikhlasan</p>
-                            <p class="text-xs text-blue-800 mt-1">Membungkam keinginan menceritakan amal dan menyembunyikan kebaikan sebagaimana enggan memperlihatkan aib diri.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Panel: 4. Takabur -->
-            <div id="trait-takabur" class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm space-y-6 hidden">
-                <div class="flex justify-between items-start border-b border-slate-100 pb-4">
-                    <div>
-                        <span class="text-xs font-bold text-blue-700 bg-blue-100 px-2.5 py-1 rounded-full uppercase">Pertemuan 3 (Pekan 2)</span>
-                        <h3 class="text-2xl font-black text-slate-800 mt-2">Takabur (Sombong)</h3>
-                        <p class="text-sm text-slate-500">Merasa diri lebih mulia dan memandang rendah orang lain.</p>
-                    </div>
-                    <span class="text-3xl">👑</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
-                            <h4 class="font-bold text-amber-900 text-sm mb-1">2 Pilar Utama Takabur (H.R. Muslim)</h4>
-                            <ul class="text-xs text-amber-950 space-y-1 list-disc list-inside">
-                                <li><strong>Batarul Haq:</strong> Menolak nasihat/kebenaran karena merasa paling tahu.</li>
-                                <li><strong>Ghamthun Naas:</strong> Meremehkan dan memandang rendah orang lain.</li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
-                            <h4 class="font-bold text-emerald-900 text-sm mb-2">Dalil Al-Qur'an (Q.S. Luqman / 31: 18)</h4>
-                            <p class="font-serif text-right text-lg font-bold text-emerald-950 leading-loose mb-2">
-                                وَلَا تُصَعِّرْ خَدَّكَ لِلنَّاسِ وَلَا تَمْشِ فِي الْأَرْضِ مَرَحًا ۖ
-                            </p>
-                            <p class="text-xs text-emerald-900 italic">
-                                "Dan janganlah kamu memalingkan mukamu dari manusia (karena sombong) dan janganlah kamu berjalan di muka bumi dengan angkuh..."
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <h4 class="font-bold text-slate-800 text-sm mb-1">📱 Realitas Remaja Digital</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">
-                                Perilaku senioritas berlebihan, meremehkan teman yang kurang pandai teknologi, serta melakukan *cyberbullying* terhadap orang yang dianggap sosial fisiknya di bawah standar.
-                            </p>
-                        </div>
-
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                            <h4 class="font-bold text-blue-900 text-sm mb-1">🛡️ Penawar (Akhlak Mahmudah)</h4>
-                            <p class="text-xs text-blue-950 font-medium">Tawaduk (Rendah Hati)</p>
-                            <p class="text-xs text-blue-800 mt-1">Meyakini bahwa segala kelebihan adalah titipan sementara dari Allah SWT dan mau menerima kritik dari siapa pun.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Panel: 5. Hasad -->
-            <div id="trait-hasad" class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm space-y-6 hidden">
-                <div class="flex justify-between items-start border-b border-slate-100 pb-4">
-                    <div>
-                        <span class="text-xs font-bold text-purple-700 bg-purple-100 px-2.5 py-1 rounded-full uppercase">Pertemuan 4 (Pekan 2)</span>
-                        <h3 class="text-2xl font-black text-slate-800 mt-2">Hasad (Dengki)</h3>
-                        <p class="text-sm text-slate-500">Iri hati atas kebahagiaan/nikmat orang lain dan berharap nikmat tersebut lenyap.</p>
-                    </div>
-                    <span class="text-3xl">🔥</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
-                            <h4 class="font-bold text-amber-900 text-sm mb-1">Beda Hasad vs Ghibthah</h4>
-                            <ul class="text-xs text-amber-950 space-y-1 list-disc list-inside">
-                                <li><strong>Hasad (Dilarang):</strong> Dengki dan ingin nikmat orang lain hancur/hilang.</li>
-                                <li><strong>Ghibthah (Diusahakan):</strong> Ingin memiliki kebaikan/prestasi seperti orang lain tanpa ada niat nikmat orang tersebut hancur.</li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
-                            <h4 class="font-bold text-emerald-900 text-sm mb-2">Dalil Hadis Shahih (H.R. Abu Dawud)</h4>
-                            <p class="font-serif text-right text-lg font-bold text-emerald-950 leading-loose mb-2">
-                                إِيَّاكُمْ وَالْحَسَدَ فَإِنَّ الْحَسَدَ يَأْكُلُ الْحَسَنَاتِ كَمَا تَأْكُلُ النَّارُ الْحَطَبَ
-                            </p>
-                            <p class="text-xs text-emerald-900 italic">
-                                "Jauhilah olehmu sifat hasad (dengki), karena sesungguhnya hasad itu memakan kebaikan sebagaimana api memakan kayu bakar."
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <h4 class="font-bold text-slate-800 text-sm mb-1">📱 Realitas Remaja Digital</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">
-                                Muncul rasa "panas hati" ketika melihat prestasi atau kebahagiaan kawan di media sosial, lalu menuliskan komentar negatif (hate comment) secara anonim.
-                            </p>
-                        </div>
-
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                            <h4 class="font-bold text-blue-900 text-sm mb-1">🛡️ Penawar (Akhlak Mahmudah)</h4>
-                            <p class="text-xs text-blue-950 font-medium">Syukur & Qana'ah</p>
-                            <p class="text-xs text-blue-800 mt-1">Merasa cukup atas rezeki sendiri, serta mendoakan keberkahan bagi kawan yang meraih kebahagiaan.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= SECTION 3: RANTAI KETERKAITAN ================= -->
-        <section id="sec-rantai" class="space-y-6 hidden">
-            <!-- Intro Paragraph -->
-            <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm">
-                <h2 class="text-xl font-bold text-emerald-900 mb-2">Sintesis: Rantai Keterkaitan 5 Penyakit Hati</h2>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                    Kelima sifat mazmumah ini bukanlah perbuatan yang terpisah, melainkan sebuah mata rantai penyakit spiritual. Seseorang yang diawali dari gaya hidup konsumtif (*Berfoya-foya*) terdorong memamerkan pencitraannya (*Riya/Sum'ah*). Sanjungan publik memunculkan perasaan superior (*Takabur*), hingga ketika orang lain melampauinya, lahirlah sifat kedengkian (*Hasad*).
-                </p>
-            </div>
-
-            <!-- Flow Visual Diagram -->
-            <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm space-y-6">
-                <h3 class="font-bold text-slate-800 text-lg border-b border-slate-100 pb-3">Alur Mata Rantai Kerusakan Hati</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-center">
-                    <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200">
-                        <span class="text-2xl">💸</span>
-                        <h4 class="font-bold text-emerald-900 text-sm mt-1">1. Berfoya-foya</h4>
-                        <p class="text-[11px] text-slate-600 mt-1">Membeli barang mewah & berlebihan demi gengsi.</p>
-                    </div>
-                    <div class="p-4 bg-amber-50 rounded-xl border border-amber-200">
-                        <span class="text-2xl">👀</span>
-                        <h4 class="font-bold text-amber-900 text-sm mt-1">2. Riya</h4>
-                        <p class="text-[11px] text-slate-600 mt-1">Memamerkan harta & ibadah demi *likes*.</p>
-                    </div>
-                    <div class="p-4 bg-purple-50 rounded-xl border border-purple-200">
-                        <span class="text-2xl">🗣️</span>
-                        <h4 class="font-bold text-purple-900 text-sm mt-1">3. Sum'ah</h4>
-                        <p class="text-[11px] text-slate-600 mt-1">Menceritakan kebaikan diri ke khalayak.</p>
-                    </div>
-                    <div class="p-4 bg-blue-50 rounded-xl border border-blue-200">
-                        <span class="text-2xl">👑</span>
-                        <h4 class="font-bold text-blue-900 text-sm mt-1">4. Takabur</h4>
-                        <p class="text-[11px] text-slate-600 mt-1">Merasa lebih tinggi & meremehkan sesama.</p>
-                    </div>
-                    <div class="p-4 bg-rose-50 rounded-xl border border-rose-200">
-                        <span class="text-2xl">🔥</span>
-                        <h4 class="font-bold text-rose-900 text-sm mt-1">5. Hasad</h4>
-                        <p class="text-[11px] text-slate-600 mt-1">Dengki saat orang lain mengungguli.</p>
-                    </div>
-                </div>
-
-                <!-- Radar Chart Visualization -->
-                <div class="pt-4 border-t border-slate-100">
-                    <h4 class="font-bold text-slate-800 mb-2 text-sm text-center">Profil Dampak Kerusakan Spiritual & Sosial</h4>
-                    <div class="chart-container">
-                        <canvas id="chartTraitImpact"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Summary Comparison Table -->
-            <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm overflow-x-auto">
-                <h3 class="font-bold text-slate-800 text-lg mb-4">Matriks Perbandingan Ringkas Bab 3</h3>
-                <table class="w-full text-xs sm:text-sm text-left border-collapse">
-                    <thead>
-                        <tr class="bg-emerald-900 text-white">
-                            <th class="p-3 rounded-tl-lg">Sifat Mazmumah</th>
-                            <th class="p-3">Pengertian Singkat</th>
-                            <th class="p-3">Ciri khas / Bentuk Digital</th>
-                            <th class="p-3">Dampak Negatif</th>
-                            <th class="p-3 rounded-tr-lg">Akhlak Penawar</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-200 bg-slate-50">
-                        <tr>
-                            <td class="p-3 font-bold text-emerald-900">Berfoya-foya</td>
-                            <td class="p-3">Berlebihan (israf) atau sia-sia (tabzir)</td>
-                            <td class="p-3">*Flexing* barang bermerek demi gengsi</td>
-                            <td class="p-3">Saudara setan, krisis finansial</td>
-                            <td class="p-3 font-semibold text-emerald-700">Bersahaja (Sederhana)</td>
-                        </tr>
-                        <tr>
-                            <td class="p-3 font-bold text-amber-900">Riya</td>
-                            <td class="p-3">Pamer amalan ibadah secara visual</td>
-                            <td class="p-3">Mencari *likes* dari konten kebaikan</td>
-                            <td class="p-3">Gugur pahala, syirik kecil</td>
-                            <td class="p-3 font-semibold text-emerald-700">Ikhlas (*Lillahi Ta'ala*)</td>
-                        </tr>
-                        <tr>
-                            <td class="p-3 font-bold text-purple-900">Sum'ah</td>
-                            <td class="p-3">Menceritakan amalan lewat lisan/cerita</td>
-                            <td class="p-3">Pengakuan cerita keberhasilan donasi</td>
-                            <td class="p-3">Terjebak kepalsuan pencitraan</td>
-                            <td class="p-3 font-semibold text-emerald-700">Menjaga Lisan</td>
-                        </tr>
-                        <tr>
-                            <td class="p-3 font-bold text-blue-900">Takabur</td>
-                            <td class="p-3">Merasa superior & memandang rendah orang</td>
-                            <td class="p-3">Menolak nasihat, *cyberbullying*</td>
-                            <td class="p-3">Tersumbat dari hidayah & surga</td>
-                            <td class="p-3 font-semibold text-emerald-700">Tawaduk (Rendah Hati)</td>
-                        </tr>
-                        <tr>
-                            <td class="p-3 font-bold text-rose-900">Hasad</td>
-                            <td class="p-3">Iri & berharap nikmat kawan lenyap</td>
-                            <td class="p-3">Panas hati melihat unggahan kawan</td>
-                            <td class="p-3">Memakan kebaikan bagai api & kayu</td>
-                            <td class="p-3 font-semibold text-emerald-700">Syukur & Qana'ah</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- ================= SECTION 4: WORKSHOP LKPD ================= -->
-        <section id="sec-lkpd" class="space-y-6 hidden">
-            <!-- Intro Paragraph -->
-            <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm">
-                <h2 class="text-xl font-bold text-emerald-900 mb-2">Workshop Lembar Kerja Peserta Didik (LKPD) Interaktif</h2>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                    Siswa dapat memilih lembar kerja LKPD Pertemuan 1 s.d. 4 untuk dianalisis secara langsung di aplikasi ini. Setelah menjawab kasus nyata, siswa dapat melakukan pengecekan kunci/panduan jawaban guna mengukur pemahaman kritis.
-                </p>
-            </div>
-
-            <!-- Selector LKPD -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <button onclick="loadLKPD(1)" id="btn-lkpd-1" class="p-3 rounded-xl border font-bold text-xs sm:text-sm text-left bg-emerald-700 text-white border-emerald-700 shadow-sm">
-                    LKPD 1: Israf & Tabzir (P-1)
-                </button>
-                <button onclick="loadLKPD(2)" id="btn-lkpd-2" class="p-3 rounded-xl border font-bold text-xs sm:text-sm text-left bg-white text-slate-700 border-slate-200 hover:bg-slate-50">
-                    LKPD 2: Riya & Sum'ah (P-2)
-                </button>
-                <button onclick="loadLKPD(3)" id="btn-lkpd-3" class="p-3 rounded-xl border font-bold text-xs sm:text-sm text-left bg-white text-slate-700 border-slate-200 hover:bg-slate-50">
-                    LKPD 3: Takabur & Tawaduk (P-3)
-                </button>
-                <button onclick="loadLKPD(4)" id="btn-lkpd-4" class="p-3 rounded-xl border font-bold text-xs sm:text-sm text-left bg-white text-slate-700 border-slate-200 hover:bg-slate-50">
-                    LKPD 4: Hasad & Komitmen (P-4)
-                </button>
-            </div>
-
-            <!-- LKPD Dynamic Display Card -->
-            <div id="lkpd-card" class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm space-y-6">
-                <!-- Dynamic Content injected via JS -->
-            </div>
-        </section>
-
-        <!-- ================= SECTION 5: BANK SOAL & EVALUASI ================= -->
-        <section id="sec-asesmen" class="space-y-6 hidden">
-            <!-- Intro Paragraph -->
-            <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm">
-                <h2 class="text-xl font-bold text-emerald-900 mb-2">Pusat Bank Soal & Evaluasi Bab 3 (25 Soal HOTS)</h2>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                    Uji pemahaman siswa secara interaktif yang mencakup 10 Soal Pilihan Ganda, 5 Soal Pilihan Ganda Kompleks, 5 Soal Benar/Salah Beralasan, dan 5 Soal Uraian HOTS. Aplikasi akan memberikan koreksi instan dan pembahasan lengkap untuk setiap item soal.
-                </p>
-            </div>
-
-            <!-- Filter Categories -->
-            <div class="flex space-x-2 overflow-x-auto custom-scrollbar pb-2">
-                <button onclick="filterSoal('pg')" id="btn-soal-pg" class="px-4 py-2 text-xs font-bold rounded-lg bg-emerald-700 text-white">Pilihan Ganda (10)</button>
-                <button onclick="filterSoal('pgk')" id="btn-soal-pgk" class="px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">PG Kompleks (5)</button>
-                <button onclick="filterSoal('bs')" id="btn-soal-bs" class="px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">Benar / Salah (5)</button>
-                <button onclick="filterSoal('uraian')" id="btn-soal-uraian" class="px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">Uraian HOTS (5)</button>
-            </div>
-
-            <!-- Quiz Score Panel -->
-            <div class="bg-slate-900 text-white p-4 rounded-xl flex items-center justify-between">
-                <div>
-                    <span class="text-xs text-slate-400">Skor Terhitung (Pilihan Ganda & BS)</span>
-                    <p id="quiz-score" class="text-2xl font-black text-emerald-400">0 / 15</p>
-                </div>
-                <button onclick="resetQuiz()" class="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded text-slate-200 font-semibold">Reset Ujian</button>
-            </div>
-
-            <!-- Question Container -->
-            <div id="questions-container" class="space-y-4">
-                <!-- Dynamic questions injected by JS -->
-            </div>
-        </section>
-
-        <!-- ================= SECTION 6: MUHASABAH & DEKLARASI ================= -->
-        <section id="sec-refleksi" class="space-y-6 hidden">
-            <!-- Intro Paragraph -->
-            <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm">
-                <h2 class="text-xl font-bold text-emerald-900 mb-2">Jurnal Muhasabah & Generator Deklarasi Komitmen Diri</h2>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                    Pembelajaran PAI-BP berfokus pada perubahan akhlak nyata. Di bagian ini, siswa melakukan evaluasi diri secara jujur dan menyusun "Deklarasi Komitmen Diri" digital yang dapat diisi, ditandatangani, dan dicetak/disimpan.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Refleksi Self Test -->
-                <div class="bg-white p-6 rounded-xl border border-sand-200 shadow-sm space-y-4">
-                    <h3 class="font-bold text-slate-800 text-lg border-b border-slate-100 pb-2">3 Pertanyaan Muhasabah Diri</h3>
-                    
-                    <div class="space-y-3 text-xs">
-                        <div>
-                            <label class="font-bold text-slate-700 block mb-1">1. Dari 5 sifat mazmumah, mana yang paling sering terlintas dalam pikiran/tindakanmu?</label>
-                            <textarea id="ref-q1" rows="2" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 text-xs" placeholder="Contoh: Sering merasa iri ketika melihat postingan nilai kawan..."></textarea>
-                        </div>
-                        <div>
-                            <label class="font-bold text-slate-700 block mb-1">2. Apa langkah konkritmu saat muncul keinginan pamer (riya) di medsos?</label>
-                            <textarea id="ref-q2" rows="2" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 text-xs" placeholder="Contoh: Menunda posting 24 jam dan memeriksa ulang keikhlasan niat..."></textarea>
-                        </div>
-                        <div>
-                            <label class="font-bold text-slate-700 block mb-1">3. Apakah kamu sudah merasa cukup (qana'ah) dengan rezeki yang dimiliki saat ini?</label>
-                            <textarea id="ref-q3" rows="2" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 text-xs" placeholder="Tuliskan rasa syukur dan tekadmu..."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Digital Declaration Card Generator -->
-                <div class="bg-emerald-900 text-white p-6 rounded-xl shadow-md space-y-4 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-xs bg-amber-500 text-emerald-950 font-black px-2 py-0.5 rounded">AKHLAK MAHMUDAH</span>
-                            <span class="text-xs text-emerald-200">Bab 3 Komitmen</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Deklarasi Komitmen Diri</h3>
-                        
-                        <div class="space-y-3 text-xs text-emerald-100">
-                            <div>
-                                <label class="block text-emerald-300 mb-0.5">Nama Siswa:</label>
-                                <input type="text" id="decl-name" class="w-full bg-emerald-800 border border-emerald-700 rounded px-2.5 py-1.5 text-white placeholder-emerald-400" placeholder="Tulis nama lengkapmu...">
-                            </div>
-                            <div>
-                                <label class="block text-emerald-300 mb-0.5">Kelas / Sekolah:</label>
-                                <input type="text" id="decl-class" class="w-full bg-emerald-800 border border-emerald-700 rounded px-2.5 py-1.5 text-white placeholder-emerald-400" placeholder="X-1 / SMA Negeri 1...">
-                            </div>
-
-                            <div class="bg-emerald-950/60 p-3 rounded-lg border border-emerald-700 italic text-[11px] leading-relaxed mt-3">
-                                "Dengan memohon petunjuk Allah SWT, saya berjanji untuk: <br>
-                                1. Selalu bersikap bersahaja dan menjauhi sifat berfoya-foya.<br>
-                                2. Menjaga ketulusan niat beramal dari sifat riya dan sum'ah.<br>
-                                3. Membiasakan sikap tawaduk dan menjauhi kesombongan.<br>
-                                4. Melatih rasa syukur dan qana'ah agar terhindar dari sifat hasad."
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pt-4 border-t border-emerald-800 flex justify-between items-center">
-                        <span id="decl-date" class="text-[10px] text-emerald-300 font-mono">Tanggal: 12/09/2026</span>
-                        <button onclick="printDeclaration()" class="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold px-4 py-1.5 rounded text-xs transition-colors">
-                            🖨️ Cetak / Simpan Deklarasi
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-emerald-950 text-emerald-300 text-xs py-4 border-t border-emerald-800">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-1">
-            <p>Modul Ajar PAI & Budi Pekerti SMA Kelas X - Bab 3 (Kurikulum Merdeka 2026)</p>
-            <p class="text-emerald-500 text-[11px]">Disusun sesuai Keputusan Kepala BKPDM Nomor 020 Tahun 2026 / BSKAP 046/H/KR/2025</p>
-        </div>
-    </footer>
-
-    <!-- JavaScript Application Logic -->
-    <script>
-        // Global State & Base Data
-        let currentTab = 'kurikulum';
-        let userAnswers = {};
-
-        // Data 25 Questions
-        const questionsData = {
-            pg: [
-                {
-                    id: 1,
-                    q: "Perilaku menggunakan atau mengeluarkan harta secara berlebihan melampaui batas kebutuhan yang wajar dalam Islam disebut...",
-                    opts: ["A. Tabzir", "B. Israf", "C. Riya", "D. Hasad", "E. Takabur"],
-                    ans: "B",
-                    exp: "Israf adalah perbuatan berlebihan dalam hal-hal yang halal, sedangkan Tabzir adalah membuang harta untuk hal maksiat/sia-sia."
-                },
-                {
-                    id: 2,
-                    q: "Potongan ayat Q.S. al-Isra' ayat 27 'إِنَّ الْمُبَذِّرِينَ كَانُوا إِخْوَانَ الشَّيَاطِينِ' mengandung arti bahwa...",
-                    opts: ["A. Orang sombong akan menemani setan", "B. Orang yang boros adalah saudara-saudara setan", "C. Orang dengki dihapus kebaikannya", "D. Orang riya beribadah bersama setan", "E. Pembohong adalah pengikut setan"],
-                    ans: "B",
-                    exp: "Ayat ini secara tegas mengumpamakan pemboros (tabzir) sebagai saudara setan karena sama-sama mengkufuri nikmat."
-                },
-                {
-                    id: 3,
-                    q: "Perbedaan utama antara sifat riya' dan sum'ah terletak pada...",
-                    opts: ["A. Riya harta, sum'ah ilmu", "B. Riya terang-terangan, sum'ah sembunyi", "C. Riya memamerkan amalan agar dilihat, sum'ah menceritakan agar didengar", "D. Riya dosa besar, sum'ah dosa kecil", "E. Riya dunia nyata, sum'ah media sosial"],
-                    ans: "C",
-                    exp: "Riya berbasis visual/penglihatan saat beramal, sedangkan Sum'ah berbasis pendengaran/cerita lisan setelah beramal."
-                },
-                {
-                    id: 4,
-                    q: "Seseorang yang melakukan amalan ibadah demi pujian atau posisi sosial tergolong melakukan perbuatan...",
-                    opts: ["A. Syirik Akbar", "B. Syirik Asghar (Kecil)", "C. Kufr Nikmat", "D. Nifaq Amali", "E. Murtad"],
-                    ans: "B",
-                    exp: "Riya dan Sum'ah dikategorikan sebagai Syirik Asghar (syirik kecil/terselubung) yang menggugurkan pahala."
-                },
-                {
-                    id: 5,
-                    q: "Rasulullah SAW mendefinisikan sombong (takabur) dalam hadis riwayat Muslim sebagai...",
-                    opts: ["A. Memakai pakaian mahal", "B. Menolak kebenaran dan meremehkan manusia", "C. Memiliki kekayaan melimpah", "D. Enggan bertegur sapa", "E. Sering memuji diri sendiri"],
-                    ans: "B",
-                    exp: "Hadis shahih Muslim menegaskan sombong adalah batarul haq (menolak kebenaran) dan ghamthun naas (meremehkan manusia)."
-                },
-                {
-                    id: 6,
-                    q: "Sifat tawaduk merupakan penawar utama bagi penyakit hati berupa...",
-                    opts: ["A. Israf", "B. Riya", "C. Hasad", "D. Takabur", "E. Tabzir"],
-                    ans: "D",
-                    exp: "Tawaduk (rendah hati) adalah lawan sifat utama dari Takabur (sombong)."
-                },
-                {
-                    id: 7,
-                    q: "Istilah untuk menggambarkan sifat 'Susah melihat orang lain senang, dan senang melihat orang lain susah' adalah...",
-                    opts: ["A. Riya", "B. Sum'ah", "C. Hasad", "D. Israf", "E. Takabur"],
-                    ans: "C",
-                    exp: "Ciri utama Hasad (dengki) adalah tidak senang atas nikmat orang lain dan berharap nikmat itu lenyap."
-                },
-                {
-                    id: 8,
-                    q: "Perumpamaan pahala yang terhapus akibat sifat hasad dalam hadis Nabi SAW disamakan dengan...",
-                    opts: ["A. Batu licin ditimpa hujan", "B. Api yang memakan kayu bakar", "C. Debu ditiup angin", "D. Air raksa menguap", "E. Daun kering gugur"],
-                    ans: "B",
-                    exp: "H.R. Abu Dawud menyebutkan bahwa hasad memakan kebaikan sebagaimana api memakan kayu bakar."
-                },
-                {
-                    id: 9,
-                    q: "Keinginan memiliki prestasi seperti orang lain TANPA ada harapan nikmat orang tersebut hilang dinamakan...",
-                    opts: ["A. Hasad", "B. Ghibthah", "C. Riya", "D. Takabur", "E. Tabzir"],
-                    ans: "B",
-                    exp: "Ghibthah adalah iri positif yang dibolehkan dalam Islam (bercita-cita menyamai kebaikan kawan)."
-                },
-                {
-                    id: 10,
-                    q: "Penawar utama untuk membentengi diri dari sifat iri dan dengki (hasad) atas keberhasilan orang lain adalah...",
-                    opts: ["A. Sikap tegas", "B. Semangat kompetisi tanpa batas", "C. Sifat qana'ah dan syukur", "D. Popularitas di medsos", "E. Menimbun harta"],
-                    ans: "C",
-                    exp: "Qana'ah (merasa cukup) dan Syukur membebaskan hati dari membanding-bandingkan diri dengan orang lain."
-                }
-            ],
-            pgk: [
-                {
-                    id: 11,
-                    q: "Manakah dari contoh berikut yang tergolong tindakan TABZIR? (Pilih jawaban benar)",
-                    opts: [
-                        "A. Membuang makanan layak ke sampah (BENAR)",
-                        "B. Membeli pakaian sekolah sesuai kebutuhan",
-                        "C. Membeli voucer game jutaan rupiah dari uang SPP (BENAR)",
-                        "D. Bersedekah ke panti asuhan"
-                    ],
-                    ans: "A dan C",
-                    exp: "Tabzir adalah membuang harta secara sia-sia/maksiat seperti buang makanan dan judi/game online."
-                },
-                {
-                    id: 12,
-                    q: "Ciri-ciri seseorang yang terjangkit sifat RIYA' dalam beramal adalah...",
-                    opts: [
-                        "A. Giat beribadah jika depan banyak orang (BENAR)",
-                        "B. Malas beribadah jika sedang seorang diri (BENAR)",
-                        "C. Konsisten beribadah ada/tidak ada orang",
-                        "D. Gelisah jika tidak mendapat pujian (BENAR)"
-                    ],
-                    ans: "A, B, dan D",
-                    exp: "Riya merusak keikhlasan sehingga motivasi beramal bergantung pada pengakuan manusia."
-                },
-                {
-                    id: 13,
-                    q: "Dampak negatif sifat TAKABUR dalam kehidupan sosial adalah...",
-                    opts: [
-                        "A. Terputusnya tali silaturahmi (BENAR)",
-                        "B. Sulit menerima kritik & saran orang lain (BENAR)",
-                        "C. Hati menjadi tenteram",
-                        "D. Dibenci lingkungan pergaulan (BENAR)"
-                    ],
-                    ans: "A, B, dan D",
-                    exp: "Takabur merendahkan orang lain sehingga memicu perpecahan dan kebencian sosial."
-                },
-                {
-                    id: 14,
-                    q: "Pernyataan yang tepat tentang perbedaan ISRAF dan TABZIR adalah...",
-                    opts: [
-                        "A. Israf dalam hal halal, Tabzir dalam hal sia-sia/maksiat (BENAR)",
-                        "B. Israf hanya makanan, Tabzir hanya uang",
-                        "C. Membeli makanan halal terlalu banyak sampai basi = Israf (BENAR)",
-                        "D. Israf diperbolehkan dalam syariat"
-                    ],
-                    ans: "A dan C",
-                    exp: "Israf berlebihan pada hal halal, sedangkan Tabzir pemborosan pada perbuatan sia-sia."
-                },
-                {
-                    id: 15,
-                    q: "Amalan hati yang menjadi benteng pencegah 5 sifat mazmumah adalah...",
-                    opts: [
-                        "A. Ikhlas dalam beramal (BENAR)",
-                        "B. Qana'ah terhadap rezeki (BENAR)",
-                        "C. Tawaduk dalam pergaulan (BENAR)",
-                        "D. Ambisi mengejar sanjungan"
-                    ],
-                    ans: "A, B, dan C",
-                    exp: "Ikhlas, Qana'ah, dan Tawaduk adalah 3 pilar utama akhlak mahmudah penawar penyakit hati."
-                }
-            ],
-            bs: [
-                {
-                    id: 16,
-                    q: "Menampilkan foto kegiatan bakti sosial di media sosial sudah pasti tergolong perbuatan RIYA'.",
-                    ans: "SALAH",
-                    exp: "Tergantung niat di dalam hati. Jika berniat untuk syiar dan inspirasi kebaikan, dibolehkan. Namun jika berniat dipuji, barulah menjadi Riya."
-                },
-                {
-                    id: 17,
-                    q: "Sikapt tawaduk akan menurunkan harga diri dan derajat seseorang di mata manusia.",
-                    ans: "SALAH",
-                    exp: "Menurut hadis Nabi, barangsiapa yang bertawaduk karena Allah, Allah SWT justru akan mengangkat derajatnya di dunia dan akhirat."
-                },
-                {
-                    id: 18,
-                    q: "Perilaku flexing (pamer kekayaan) di media sosial sangat erat kaitannya dengan sifat berfoya-foya dan riya.",
-                    ans: "BENAR",
-                    exp: "Flexing didorong oleh nafsu dipuji (riya/sum'ah) dan sering kali memicu pemborosan (israf/tabzir)."
-                },
-                {
-                    id: 19,
-                    q: "Sifat hasad tidak hanya merugikan orang yang didengki, tetapi juga merusak kesehatan spiritual pelaku dengki itu sendiri.",
-                    ans: "BENAR",
-                    exp: "Hasad membuat hati gelisah dan memakan pahala amalan bagaikan api memakan kayu bakar."
-                },
-                {
-                    id: 20,
-                    q: "Membeli barang bermerek mahal sesuai fungsi kelayakan dan didukung finansial yang sah tanpa sombong dikategorikan TABZIR.",
-                    ans: "SALAH",
-                    exp: "Jika dibeli sesuai kebutuhan, finansial mampu, dan tidak niat pamer/maksiat, maka hal itu bukan tabzir."
-                }
-            ],
-            uraian: [
-                {
-                    id: 21,
-                    q: "Menganalisis fenomena Fear of Missing Out (FOMO) pada remaja dari sudut pandang Islam, bagaimana hubungan FOMO dengan sifat israf dan riya?",
-                    exp: "Remaja yang mengalami FOMO membeli barang karena tekanan tren (bukan kebutuhan), yang mengarah pada ISRAF/TABZIR. Dorongan memamerkannya demi konten likes merupakan bentuk RIYA/SUM'AH. Solusinya adalah membangun kesadaran QANA'AH."
-                },
-                {
-                    id: 22,
-                    q: "Mengapa Al-Qur'an secara keras mengumpamakan pemboros (tabzir) sebagai 'saudara-saudara setan' dalam Q.S. al-Isra' ayat 27?",
-                    exp: "Setan memiliki sifat dasar ingkar (kufur) nikmat. Pemboros dikatakan saudara setan karena sama-sama mengkufuri nikmat harta dengan menyiapkannya untuk hal sia-sia/maksiat, bukan ketaatan."
-                },
-                {
-                    id: 23,
-                    q: "Farhan sangat cerdas, tetapi ia menolak penjelasan metode lain dari guru dan meremehkan teman. Analisis perilaku Farhan berdasarkan hadis tentang takabur dan rumuskan 2 langkah tawaduk!",
-                    exp: "Farhan memenuhi 2 pilar takabur: batarul haq (menolak kebenaran) & ghamthun naas (meremehkan kawan). Langkah tawaduk: (1) Belajar mendengarkan pendapat lain, (2) Mengajari teman yang kesulitan dengan penuh empati."
-                },
-                {
-                    id: 24,
-                    q: "Jelaskan bagaimana sifat hasad dapat merusak tatanan persahabatan di sekolah dan bagaimana peran syukur serta qana'ah dalam mengatasinya!",
-                    exp: "Hasad menimbulkan perpecahan, ghibah, dan kebencian. Syukur membuat seseorang fokus pada kebaikan sendiri, sedangkan qana'ah membuat hati merasa cukup tanpa perlu iri pada kawan."
-                },
-                {
-                    id: 25,
-                    q: "Buatlah jaring-jaring yang menghubungkan runtutan bagaimana sifat Berfoya-foya memicu Riya, Takabur, hingga Hasad!",
-                    exp: "Berfoya-foya (beli barang berlebih) -> Ingin dipuji & dipamerkan (Riya/Sum'ah) -> Merasa lebih tinggi dari orang lain (Takabur) -> Ketika kawan mengungguli pencapaiannya, timbul dengki (Hasad)."
-                }
-            ]
-        };
-
-        // Initialize Charts on Dom Loaded
-        document.addEventListener("DOMContentLoaded", () => {
-            initCharts();
-            loadLKPD(1);
-            filterSoal('pg');
-        });
-
-        // Tab Navigation Logic
-        function switchTab(tabId) {
-            // Hide all sections
-            ['kurikulum', 'materi', 'rantai', 'lkpd', 'asesmen', 'refleksi'].forEach(id => {
-                document.getElementById(`sec-${id}`).classList.add('hidden');
-                document.getElementById(`tab-${id}`).classList.remove('tab-active');
-            });
-
-            // Show current section & highlight tab
-            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
-            document.getElementById(`tab-${tabId}`).classList.add('tab-active');
-            currentTab = tabId;
-        }
-
-        // Sub-tab 5 Mazmumah Traits Logic
-        function showTrait(traitId) {
-            ['foya', 'riya', 'sumah', 'takabur', 'hasad'].forEach(id => {
-                document.getElementById(`trait-${id}`).classList.add('hidden');
-                const btn = document.getElementById(`btn-trait-${id}`);
-                btn.className = "px-4 py-2 text-xs sm:text-sm font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200";
-            });
-
-            document.getElementById(`trait-${traitId}`).classList.remove('hidden');
-            const activeBtn = document.getElementById(`btn-trait-${traitId}`);
-            activeBtn.className = "px-4 py-2 text-xs sm:text-sm font-bold rounded-lg bg-emerald-700 text-white";
-        }
-
-        // LKPD Interactive Content Handler
-        function loadLKPD(num) {
-            for (let i = 1; i <= 4; i++) {
-                const btn = document.getElementById(`btn-lkpd-${i}`);
-                if (i === num) {
-                    btn.className = "p-3 rounded-xl border font-bold text-xs sm:text-sm text-left bg-emerald-700 text-white border-emerald-700 shadow-sm";
-                } else {
-                    btn.className = "p-3 rounded-xl border font-bold text-xs sm:text-sm text-left bg-white text-slate-700 border-slate-200 hover:bg-slate-50";
-                }
-            }
-
-            const lkpdCard = document.getElementById('lkpd-card');
-            
-            if (num === 1) {
-                lkpdCard.innerHTML = `
-                    <div class="border-b border-slate-100 pb-3">
-                        <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded">PEKAN 1 - PERTEMUAN 1 (90 MENIT)</span>
-                        <h3 class="text-xl font-bold text-slate-800 mt-2">LKPD 1: Analisis Gaya Hidup Konsumtif (Israf & Tabzir)</h3>
-                    </div>
-                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 text-xs leading-relaxed space-y-2">
-                        <p class="font-bold text-amber-900">📖 Studi Kasus Skenario:</p>
-                        <p class="text-amber-950">"Riko mendapat uang saku mingguan Rp200.000,-. Karena ingin dipuji teman-temannya di kantin, Riko menghabiskan Rp150.000,- dalam sehari hanya untuk membeli boba kekinian dan item game online, sehingga ia tidak punya sisa uang untuk ongkos angkutan sekolah dan membeli buku modul."</p>
-                    </div>
-                    <div class="space-y-3 text-xs">
-                        <div>
-                            <label class="font-bold text-slate-700 block mb-1">1. Apakah tindakan Riko tergolong ISRAF atau TABZIR? Jelaskan alasanmu berdasarkan dalil Q.S. al-Isra': 26-27!</label>
-                            <textarea rows="3" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Tulis analisis kelompokmu..."></textarea>
-                        </div>
-                        <div>
-                            <label class="font-bold text-slate-700 block mb-1">2. Bantu Riko menyusun Rencana Keuangan Skala Prioritas dari uang Rp200.000,- tersebut!</label>
-                            <textarea rows="2" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Contoh: Ongkos transport (Rp50k), Modul (Rp70k), Tabungan (Rp50k), Jajanan (Rp30k)..."></textarea>
-                        </div>
-                    </div>
-                    <button onclick="toggleGuidance(1)" class="text-xs text-emerald-700 font-bold hover:underline">💡 Tampilkan Panduan Jawaban Guru</button>
-                    <div id="guidance-1" class="hidden bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-                        <strong>Kunci Analisis:</strong> Tindakan Riko membeli item game hingga habis saku tergolong <em>Tabzir</em> (menghamburkan harta untuk perbuatan sia-sia/keburukan), sedangkan membeli boba mahal berlebihan tergolong <em>Israf</em>. Dampak jangka panjangnya adalah financial instability dan hilangnya rasa syukur.
-                    </div>
-                `;
-            } else if (num === 2) {
-                lkpdCard.innerHTML = `
-                    <div class="border-b border-slate-100 pb-3">
-                        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded">PEKAN 1 - PERTEMUAN 2 (45 MENIT)</span>
-                        <h3 class="text-xl font-bold text-slate-800 mt-2">LKPD 2: Matriks Perbedaan Riya dan Sum'ah di Medsos</h3>
-                    </div>
-                    <p class="text-xs text-slate-600">Lengkapi matriks komparasi di bawah ini untuk membedakan motif pencitraan ibadah:</p>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-xs text-left border-collapse">
-                            <thead>
-                                <tr class="bg-slate-100">
-                                    <th class="p-2 border border-slate-200">Parameter</th>
-                                    <th class="p-2 border border-slate-200">Riya</th>
-                                    <th class="p-2 border border-slate-200">Sum'ah</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="p-2 border border-slate-200 font-semibold">Media Pamer Utama</td>
-                                    <td class="p-2 border border-slate-200">Penglihatan / Visual (Foto & Video ibadah)</td>
-                                    <td class="p-2 border border-slate-200">Pendengaran / Cerita Lisan (Podcast/Story)</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-2 border border-slate-200 font-semibold">Tujuan Akhir</td>
-                                    <td class="p-2 border border-slate-200">Dilihat & disanjung langsung</td>
-                                    <td class="p-2 border border-slate-200">Ketenaran nama dipuji orang lain</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="text-xs">
-                        <label class="font-bold text-slate-700 block mb-1">Refleksi Pasangan (Think-Pair-Share): Bagaimanakah cara membedakan konten Syiar Islam vs Riya di TikTok?</label>
-                        <textarea rows="2" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Jelaskan batasan niatnya..."></textarea>
-                    </div>
-                `;
-            } else if (num === 3) {
-                lkpdCard.innerHTML = `
-                    <div class="border-b border-slate-100 pb-3">
-                        <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2.5 py-1 rounded">PEKAN 2 - PERTEMUAN 3 (90 MENIT)</span>
-                        <h3 class="text-xl font-bold text-slate-800 mt-2">LKPD 3: Mengikis Takabur dengan Sikap Tawaduk</h3>
-                    </div>
-                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 text-xs leading-relaxed space-y-2">
-                        <p class="font-bold text-blue-900">📖 Skenario Kasus:</p>
-                        <p class="text-blue-950">"Nadia adalah juara umum di sekolah. Ketika kawan kelompoknya memberikan masukan atas draft tugasnya, Nadia menjawab: 'Nilai ujianmu kan lebih rendah dari aku, tidak usah ngatur-ngatur deh!'"</p>
-                    </div>
-                    <div class="space-y-3 text-xs">
-                        <div>
-                            <label class="font-bold text-slate-700 block mb-1">1. Unsur Takabur mana yang ditunjukkan Nadia (Menolak kebenaran / Meremehkan manusia)?</label>
-                            <input type="text" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Tulis analisis unsur takabur...">
-                        </div>
-                        <div>
-                            <label class="font-bold text-slate-700 block mb-1">2. Ubahlah ucapan Nadia di atas menjadi kalimat yang mencerminkan TAWADUK!</label>
-                            <textarea rows="2" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="Revisi kalimat rendah hati..."></textarea>
-                        </div>
-                    </div>
-                `;
-            } else if (num === 4) {
-                lkpdCard.innerHTML = `
-                    <div class="border-b border-slate-100 pb-3">
-                        <span class="text-xs bg-purple-100 text-purple-800 font-bold px-2.5 py-1 rounded">PEKAN 2 - PERTEMUAN 4 (45 MENIT)</span>
-                        <h3 class="text-xl font-bold text-slate-800 mt-2">LKPD 4: Integrasi Bab 3 & Ikrar Komitmen</h3>
-                    </div>
-                    <p class="text-xs text-slate-600">Jelaskan bagaimana sifat Berfoya-foya memicu Riya, lalu berkembang menjadi Takabur, dan berujung pada Hasad!</p>
-                    <textarea rows="3" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-emerald-500" placeholder="Peta analisis jaring-jaring keterkaitan..."></textarea>
-                `;
-            }
-        }
-
-        function toggleGuidance(num) {
-            const el = document.getElementById(`guidance-${num}`);
-            el.classList.toggle('hidden');
-        }
-
-        // Assessment Engine & Questions Logic
-        function filterSoal(type) {
-            ['pg', 'pgk', 'bs', 'uraian'].forEach(t => {
-                const btn = document.getElementById(`btn-soal-${t}`);
-                if (t === type) {
-                    btn.className = "px-4 py-2 text-xs font-bold rounded-lg bg-emerald-700 text-white";
-                } else {
-                    btn.className = "px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200";
-                }
-            });
-
-            const container = document.getElementById('questions-container');
-            container.innerHTML = '';
-
-            const data = questionsData[type];
-
-            data.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-xl border border-sand-200 shadow-sm space-y-3";
-
-                if (type === 'pg') {
-                    card.innerHTML = `
-                        <div class="flex justify-between text-xs font-bold text-slate-500 border-b border-slate-100 pb-2">
-                            <span>Soal Pilihan Ganda #${item.id}</span>
-                            <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Level C2/C3</span>
-                        </div>
-                        <p class="text-xs sm:text-sm font-semibold text-slate-800">${item.q}</p>
-                        <div class="space-y-1.5 text-xs">
-                            ${item.opts.map((opt, i) => `
-                                <label class="flex items-center space-x-2 p-2 rounded border border-slate-200 hover:bg-slate-50 cursor-pointer">
-                                    <input type="radio" name="q-${item.id}" value="${opt[0]}" onchange="checkAnswer(${item.id}, '${opt[0]}', '${item.ans}')" class="text-emerald-600 focus:ring-emerald-500">
-                                    <span>${opt}</span>
-                                </label>
-                            `).join('')}
-                        </div>
-                        <div id="feedback-${item.id}" class="hidden text-xs p-3 rounded-lg mt-2"></div>
-                    `;
-                } else if (type === 'pgk') {
-                    card.innerHTML = `
-                        <div class="flex justify-between text-xs font-bold text-slate-500 border-b border-slate-100 pb-2">
-                            <span>PG Kompleks #${item.id}</span>
-                            <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded">Pilihan Lebih dari Satu</span>
-                        </div>
-                        <p class="text-xs sm:text-sm font-semibold text-slate-800">${item.q}</p>
-                        <div class="space-y-1.5 text-xs">
-                            ${item.opts.map(opt => `
-                                <div class="p-2 rounded bg-slate-50 border border-slate-200 text-slate-700">${opt}</div>
-                            `).join('')}
-                        </div>
-                        <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-200 text-xs text-emerald-900 mt-2">
-                            <strong>Kunci & Pembahasan:</strong> ${item.ans} <br>${item.exp}
-                        </div>
-                    `;
-                } else if (type === 'bs') {
-                    card.innerHTML = `
-                        <div class="flex justify-between text-xs font-bold text-slate-500 border-b border-slate-100 pb-2">
-                            <span>Benar / Salah Beralasan #${item.id}</span>
-                            <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Penalaran Kritis</span>
-                        </div>
-                        <p class="text-xs sm:text-sm font-semibold text-slate-800">Pernyataan: "${item.q}"</p>
-                        <div class="flex space-x-3 text-xs">
-                            <button onclick="checkBS(${item.id}, 'BENAR', '${item.ans}')" class="px-4 py-1.5 rounded font-bold border border-slate-300 hover:bg-slate-100">BENAR</button>
-                            <button onclick="checkBS(${item.id}, 'SALAH', '${item.ans}')" class="px-4 py-1.5 rounded font-bold border border-slate-300 hover:bg-slate-100">SALAH</button>
-                        </div>
-                        <div id="feedback-${item.id}" class="hidden text-xs p-3 rounded-lg mt-2"></div>
-                    `;
-                } else if (type === 'uraian') {
-                    card.innerHTML = `
-                        <div class="flex justify-between text-xs font-bold text-slate-500 border-b border-slate-100 pb-2">
-                            <span>Soal Uraian HOTS #${item.id}</span>
-                            <span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded">Level C4/C5 Evaluasi</span>
-                        </div>
-                        <p class="text-xs sm:text-sm font-semibold text-slate-800">${item.q}</p>
-                        <textarea rows="3" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-emerald-500" placeholder="Ketik lembar jawaban uraian siswa..."></textarea>
-                        <button onclick="toggleGuidance('soal-${item.id}')" class="text-xs text-emerald-700 font-bold hover:underline">💡 Lihat Rubrik / Rambu Jawaban</button>
-                        <div id="guidance-soal-${item.id}" class="hidden bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-700 mt-1">
-                            <strong>Rambu Jawaban:</strong> ${item.exp}
-                        </div>
-                    `;
-                }
-
-                container.appendChild(card);
-            });
-        }
-
-        function checkAnswer(id, selected, correct) {
-            const fb = document.getElementById(`feedback-${id}`);
-            fb.classList.remove('hidden');
-            userAnswers[id] = (selected === correct);
-
-            if (selected === correct) {
-                fb.className = "text-xs p-3 rounded-lg mt-2 bg-emerald-100 text-emerald-900 border border-emerald-300";
-                fb.innerHTML = `<strong>Jawaban Benar! (Skor 1)</strong> - ${questionsData.pg.find(q=>q.id===id).exp}`;
-            } else {
-                fb.className = "text-xs p-3 rounded-lg mt-2 bg-rose-100 text-rose-900 border border-rose-300";
-                fb.innerHTML = `<strong>Jawaban Kurang Tepat! (Kunci: ${correct})</strong> - ${questionsData.pg.find(q=>q.id===id).exp}`;
-            }
-            updateScore();
-        }
-
-        function checkBS(id, selected, correct) {
-            const fb = document.getElementById(`feedback-${id}`);
-            fb.classList.remove('hidden');
-            userAnswers[id] = (selected === correct);
-
-            if (selected === correct) {
-                fb.className = "text-xs p-3 rounded-lg mt-2 bg-emerald-100 text-emerald-900 border border-emerald-300";
-                fb.innerHTML = `<strong>Tepat! (Kunci: ${correct})</strong> - ${questionsData.bs.find(q=>q.id===id).exp}`;
-            } else {
-                fb.className = "text-xs p-3 rounded-lg mt-2 bg-rose-100 text-rose-900 border border-rose-300";
-                fb.innerHTML = `<strong>Kurang Tepat! (Kunci: ${correct})</strong> - ${questionsData.bs.find(q=>q.id===id).exp}`;
-            }
-            updateScore();
-        }
-
-        function updateScore() {
-            const correctCount = Object.values(userAnswers).filter(v => v === true).length;
-            document.getElementById('quiz-score').innerText = `${correctCount} / 15`;
-        }
-
-        function resetQuiz() {
-            userAnswers = {};
-            document.getElementById('quiz-score').innerText = `0 / 15`;
-            filterSoal('pg');
-        }
-
-        function printDeclaration() {
-            const name = document.getElementById('decl-name').value || "[Nama Siswa]";
-            const kelas = document.getElementById('decl-class').value || "[Kelas]";
-            alert(`Deklarasi Komitmen Diri Bab 3 atas nama "${name} (${kelas})" berhasil dibuat dan siap dicetak!`);
-            window.print();
-        }
-
-        // Initialize Chart.js Data Visualizations
-        function initCharts() {
-            // Chart 1: Time Allocation Donut Chart
-            const ctxTime = document.getElementById('chartTimeAllocation').getContext('2d');
-            new Chart(ctxTime, {
-                type: 'doughnut',
-                data: {
-                    labels: ['P-1: Israf & Tabzir (90m)', 'P-2: Riya & Sum\'ah (45m)', 'P-3: Takabur & Tawaduk (90m)', 'P-4: Hasad & Integrasi (45m)'],
-                    datasets: [{
-                        data: [90, 45, 90, 45],
-                        backgroundColor: ['#059669', '#f59e0b', '#2563eb', '#9333ea'],
-                        borderWidth: 2,
-                        borderColor: '#ffffff'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { font: { size: 10 } } }
-                    }
-                }
-            });
-
-            // Chart 2: Profile Dimensions Horizontal Bar Chart
-            const ctxProf = document.getElementById('chartProfileDimensions').getContext('2d');
-            new Chart(ctxProf, {
-                type: 'bar',
-                data: {
-                    labels: ['Beriman & Berakhlak Mulia', 'Bernalar Kritis', 'Gotong Royong', 'Mandiri & Muhasabah'],
-                    datasets: [{
-                        label: 'Intensitas Fokus Pembelajaran (%)',
-                        data: [95, 85, 75, 90],
-                        backgroundColor: '#047857',
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { max: 100, ticks: { font: { size: 9 } } },
-                        y: { ticks: { font: { size: 9 } } }
-                    },
-                    plugins: {
-                        legend: { display: false }
-                    }
-                }
-            });
-
-            // Chart 3: Trait Impact Radar Chart
-            const ctxRadar = document.getElementById('chartTraitImpact').getContext('2d');
-            new Chart(ctxRadar, {
-                type: 'radar',
-                data: {
-                    labels: ['Kerusakan Finansial', 'Pencitraan Medsos', 'Gugur Pahala', 'Perpecahan Teman', 'Penyakit Jiwa'],
-                    datasets: [
-                        {
-                            label: 'Berfoya-foya',
-                            data: [95, 70, 40, 50, 60],
-                            borderColor: '#059669',
-                            backgroundColor: 'rgba(5, 150, 105, 0.1)'
-                        },
-                        {
-                            label: 'Riya & Sum\'ah',
-                            data: [30, 95, 100, 40, 85],
-                            borderColor: '#f59e0b',
-                            backgroundColor: 'rgba(245, 158, 11, 0.1)'
-                        },
-                        {
-                            label: 'Takabur & Hasad',
-                            data: [20, 60, 90, 95, 100],
-                            borderColor: '#e11d48',
-                            backgroundColor: 'rgba(225, 29, 72, 0.1)'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: { ticks: { display: false }, pointLabels: { font: { size: 9 } } }
-                    },
-                    plugins: {
-                        legend: { position: 'bottom', labels: { font: { size: 10 } } }
-                    }
-                }
-            });
-        }
-    </script>
+<body>
+
+<header class="header">
+  <div class="container">
+    <span class="badge">📱 LKPD PAI-BP • Versi HP</span>
+    <h1>Menghindari Sifat Berfoya-foya, Riya, Sum’ah, Takabur, dan Hasad</h1>
+    <div class="hero-sub">Kerjakan langsung dari HP. Jawab pelan-pelan, pikirkan alasannya, lalu hubungkan dengan kehidupanmu.</div>
+    <div class="quote">“Perubahan besar sering dimulai dari kejujuran kecil ketika kita berani bercermin kepada diri sendiri.”</div>
+  </div>
+</header>
+
+<div class="appbar">
+  <div class="container appbar-inner">
+    <div class="progress-row"><span>Progres pengisian</span><strong id="pct">0%</strong></div>
+    <div class="bar"><span id="bar"></span></div>
+    <div class="nav" id="nav">
+      <a href="#identitas">A</a><a href="#tujuan">B</a><a href="#pemantik">C</a><a href="#amati">D</a>
+      <a href="#kasus">E</a><a href="#diskusi">F</a><a href="#tantangan">G</a><a href="#refleksi">H</a>
+      <a href="#kesimpulan">I</a><a href="#penilaian">J</a>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+
+<section class="card" id="identitas">
+  <div class="section-head"><div class="section-letter">A</div><div><h2>Identitas Siswa</h2><div class="muted small">Isi dulu sebelum mulai.</div></div></div>
+  <div class="grid two">
+    <div class="form-group"><label>Nama</label><input name="nama" type="text" placeholder="Nama lengkap"></div>
+    <div class="form-group"><label>Kelas</label><input name="kelas" type="text" placeholder="Contoh: X-2"></div>
+    <div class="form-group"><label>No. Absen</label><input name="absen" type="text" inputmode="numeric" placeholder="Contoh: 17"></div>
+    <div class="form-group"><label>Kelompok</label><input name="kelompok" type="text" placeholder="Contoh: Kelompok 3"></div>
+    <div class="form-group"><label>Tanggal</label><input name="tanggal" type="date"></div>
+  </div>
+</section>
+
+<section class="card" id="tujuan">
+  <div class="section-head"><div class="section-letter">B</div><div><h2>Tujuan Pembelajaran</h2></div></div>
+  <div class="callout">
+    Kamu diharapkan mampu memahami konsep, mengenali contoh, menganalisis kasus, menyampaikan pendapat, dan melakukan refleksi terhadap perilaku diri sendiri.
+  </div>
+</section>
+
+<section class="card" id="pemantik">
+  <div class="section-head"><div class="section-letter">C</div><div><h2>Aktivitas Pemantik</h2><div class="muted small">“Pernahkah kita melakukannya?”</div></div></div>
+  <p class="muted small">Pilih jawaban yang paling sesuai. Tidak perlu takut salah.</p>
+
+  <div class="task-card">
+    <div class="task-no">1</div><b>Membeli sesuatu hanya karena ingin terlihat keren.</b>
+    <div class="choice-grid">
+      <label class="choice"><input type="radio" name="p1" value="Pernah">Pernah</label>
+      <label class="choice"><input type="radio" name="p1" value="Pernah melihat">Pernah melihat</label>
+      <label class="choice"><input type="radio" name="p1" value="Belum pernah">Belum pernah</label>
+    </div>
+  </div>
+
+  <div class="task-card"><div class="task-no">2</div><b>Mengunggah kegiatan sedekah agar mendapat pujian.</b><div class="choice-grid"><label class="choice"><input type="radio" name="p2" value="Pernah">Pernah</label><label class="choice"><input type="radio" name="p2" value="Pernah melihat">Pernah melihat</label><label class="choice"><input type="radio" name="p2" value="Belum pernah">Belum pernah</label></div></div>
+  <div class="task-card"><div class="task-no">3</div><b>Menceritakan kebaikan diri sendiri agar dianggap baik.</b><div class="choice-grid"><label class="choice"><input type="radio" name="p3" value="Pernah">Pernah</label><label class="choice"><input type="radio" name="p3" value="Pernah melihat">Pernah melihat</label><label class="choice"><input type="radio" name="p3" value="Belum pernah">Belum pernah</label></div></div>
+  <div class="task-card"><div class="task-no">4</div><b>Merasa diri lebih hebat daripada teman.</b><div class="choice-grid"><label class="choice"><input type="radio" name="p4" value="Pernah">Pernah</label><label class="choice"><input type="radio" name="p4" value="Pernah melihat">Pernah melihat</label><label class="choice"><input type="radio" name="p4" value="Belum pernah">Belum pernah</label></div></div>
+  <div class="task-card"><div class="task-no">5</div><b>Tidak senang ketika teman mendapatkan prestasi.</b><div class="choice-grid"><label class="choice"><input type="radio" name="p5" value="Pernah">Pernah</label><label class="choice"><input type="radio" name="p5" value="Pernah melihat">Pernah melihat</label><label class="choice"><input type="radio" name="p5" value="Belum pernah">Belum pernah</label></div></div>
+  <div class="task-card"><div class="task-no">6</div><b>Menghabiskan uang demi mengikuti tren.</b><div class="choice-grid"><label class="choice"><input type="radio" name="p6" value="Pernah">Pernah</label><label class="choice"><input type="radio" name="p6" value="Pernah melihat">Pernah melihat</label><label class="choice"><input type="radio" name="p6" value="Belum pernah">Belum pernah</label></div></div>
+
+  <div class="form-group"><label>Menurutmu, apakah semua perilaku di atas selalu mudah dikenali? Mengapa?</label><textarea name="pemantik1" placeholder="Tulis pendapatmu..."></textarea></div>
+  <div class="form-group"><label>Mengapa sesuatu yang terlihat baik belum tentu memiliki niat yang baik?</label><textarea name="pemantik2"></textarea></div>
+  <div class="form-group"><label>Mana yang lebih sulit: mengendalikan tindakan atau mengendalikan niat? Jelaskan.</label><textarea name="pemantik3"></textarea></div>
+</section>
+
+<section class="card" id="amati">
+  <div class="section-head"><div class="section-letter">D</div><div><h2>Aktivitas 1 — Amati</h2></div></div>
+  <div class="callout">
+    <b>Bekal singkat:</b><br>
+    Berfoya-foya = menggunakan harta secara berlebihan.<br>
+    Riya = berbuat agar dilihat/dipuji.<br>
+    Sum’ah = menceritakan kebaikan agar didengar/dipuji.<br>
+    Takabur = merasa lebih tinggi dan merendahkan orang lain.<br>
+    Hasad = tidak senang melihat nikmat orang lain dan berharap nikmat itu hilang.
+  </div>
+
+  <h3>Tugas 1 — Kelompokkan perilakunya</h3>
+  <div class="task-card"><div class="task-no">1</div><p>Membeli sepatu mahal padahal sepatu lama masih bagus hanya karena takut dianggap tidak mengikuti tren.</p><select name="amati1"><option value="">Pilih...</option><option>Berfoya-foya</option><option>Riya</option><option>Sum’ah</option><option>Takabur</option><option>Hasad</option></select></div>
+  <div class="task-card"><div class="task-no">2</div><p>Membantu korban banjir lalu sengaja memotret diri sendiri agar dipuji.</p><select name="amati2"><option value="">Pilih...</option><option>Berfoya-foya</option><option>Riya</option><option>Sum’ah</option><option>Takabur</option><option>Hasad</option></select></div>
+  <div class="task-card"><div class="task-no">3</div><p>Setelah bersedekah, seseorang terus menceritakan kepada banyak orang bahwa dirinya sudah banyak membantu.</p><select name="amati3"><option value="">Pilih...</option><option>Berfoya-foya</option><option>Riya</option><option>Sum’ah</option><option>Takabur</option><option>Hasad</option></select></div>
+  <div class="task-card"><div class="task-no">4</div><p>Seorang siswa mendapat nilai tinggi lalu berkata, “Kalian memang tidak akan bisa seperti saya.”</p><select name="amati4"><option value="">Pilih...</option><option>Berfoya-foya</option><option>Riya</option><option>Sum’ah</option><option>Takabur</option><option>Hasad</option></select></div>
+  <div class="task-card"><div class="task-no">5</div><p>Seorang siswa kesal ketika temannya menjadi juara kelas dan berharap temannya gagal di lomba berikutnya.</p><select name="amati5"><option value="">Pilih...</option><option>Berfoya-foya</option><option>Riya</option><option>Sum’ah</option><option>Takabur</option><option>Hasad</option></select></div>
+  <div class="task-card"><div class="task-no">6</div><p>Menghabiskan uang jajan untuk membeli barang-barang yang sebenarnya tidak dibutuhkan.</p><select name="amati6"><option value="">Pilih...</option><option>Berfoya-foya</option><option>Riya</option><option>Sum’ah</option><option>Takabur</option><option>Hasad</option></select></div>
+
+  <h3>Tugas 2 — Jelaskan alasanmu</h3>
+  <div class="form-group"><label>Pilih contoh nomor</label><input name="amati7" type="text" inputmode="numeric" placeholder="Contoh: 2"></div>
+  <div class="form-group"><label>Mengapa contoh tersebut termasuk perilaku itu?</label><textarea name="amati8"></textarea></div>
+  <div class="form-group"><label>Pilih contoh nomor lainnya</label><input name="amati9" type="text" inputmode="numeric" placeholder="Contoh: 5"></div>
+  <div class="form-group"><label>Mengapa contoh tersebut termasuk perilaku itu?</label><textarea name="amati10"></textarea></div>
+</section>
+
+<section class="card" id="kasus">
+  <div class="section-head"><div class="section-letter">E</div><div><h2>Aktivitas 2 — Analisis Kasus</h2><div class="muted small">Baca → pikirkan → jelaskan.</div></div></div>
+
+  <div class="case">
+    <span class="case-tag">Kasus 1 • Media sosial</span>
+    <h3>“Konten Kebaikan”</h3>
+    <p>Raka ikut kegiatan bakti sosial di sekolah. Ia membantu membagikan makanan kepada warga. Setelah itu, Raka mengunggah banyak foto dan video dirinya sedang membantu. Ia berharap teman-temannya melihat dan mengatakan bahwa dirinya sangat dermawan.</p>
+    <div class="form-group"><label>1. Apa yang dilakukan Raka?</label><textarea name="k1a"></textarea></div>
+    <div class="form-group"><label>2. Apakah membantu orang lain itu salah? Mengapa?</label><textarea name="k1b"></textarea></div>
+    <div class="form-group"><label>3. Bagian mana yang perlu diperbaiki?</label><textarea name="k1c"></textarea></div>
+    <div class="form-group"><label>4. Bagaimana cara menjaga keikhlasan?</label><textarea name="k1d"></textarea></div>
+    <div class="form-group"><label>5. Jika dokumentasi dibutuhkan untuk laporan sekolah, apakah otomatis riya?</label><textarea name="k1e"></textarea></div>
+  </div>
+
+  <div class="case">
+    <span class="case-tag">Kasus 2 • Gaya hidup</span>
+    <h3>“Harus Punya yang Terbaru”</h3>
+    <p>Dina masih memiliki ponsel yang berfungsi baik. Karena hampir semua temannya menggunakan model terbaru, ia merasa malu. Ia meminta orang tuanya membelikan ponsel baru meskipun kondisi ekonomi keluarganya sedang sulit.</p>
+    <div class="form-group"><label>1. Apa masalah utama dari kasus Dina?</label><textarea name="k2a"></textarea></div>
+    <div class="form-group"><label>2. Apakah keinginan memiliki barang baru selalu berarti berfoya-foya?</label><textarea name="k2b"></textarea></div>
+    <div class="form-group"><label>3. Apa kemungkinan dampaknya?</label><textarea name="k2c"></textarea></div>
+    <div class="form-group"><label>4. Nasihat apa yang dapat kamu berikan?</label><textarea name="k2d"></textarea></div>
+  </div>
+
+  <div class="case">
+    <span class="case-tag">Kasus 3 • Prestasi</span>
+    <h3>“Aku Lebih Hebat”</h3>
+    <p>Fajar mendapat nilai matematika paling tinggi di kelas. Setelah itu ia mulai meremehkan beberapa teman. Ketika ada teman bertanya, ia menjawab, “Masa begitu saja tidak bisa?”</p>
+    <div class="form-group"><label>1. Apa yang berubah dari sikap Fajar?</label><textarea name="k3a"></textarea></div>
+    <div class="form-group"><label>2. Mengapa prestasi bisa menjadi ujian?</label><textarea name="k3b"></textarea></div>
+    <div class="form-group"><label>3. Apa perbedaan percaya diri dan takabur?</label><textarea name="k3c"></textarea></div>
+    <div class="form-group"><label>4. Bagaimana seharusnya Fajar menggunakan kelebihannya?</label><textarea name="k3d"></textarea></div>
+  </div>
+
+  <div class="case">
+    <span class="case-tag">Kasus 4 • Pertemanan</span>
+    <h3>“Kenapa Bukan Aku?”</h3>
+    <p>Salsa belajar keras untuk lomba. Namun yang juara justru sahabatnya. Salsa kecewa dan dalam hati berharap sahabatnya tidak berhasil di lomba berikutnya.</p>
+    <div class="form-group"><label>1. Apa yang sedang dirasakan Salsa?</label><textarea name="k4a"></textarea></div>
+    <div class="form-group"><label>2. Apakah kecewa otomatis berarti hasad?</label><textarea name="k4b"></textarea></div>
+    <div class="form-group"><label>3. Bagaimana mengubah rasa iri menjadi sesuatu yang positif?</label><textarea name="k4c"></textarea></div>
+    <div class="form-group"><label>4. Apa yang sebaiknya dilakukan Salsa?</label><textarea name="k4d"></textarea></div>
+  </div>
+</section>
+
+<section class="card" id="diskusi">
+  <div class="section-head"><div class="section-letter">F</div><div><h2>Aktivitas 3 — Diskusi Kelompok</h2></div></div>
+  <div class="callout">Bentuk kelompok 4–5 siswa. Pilih satu tema, lalu cari contoh nyata dari kehidupan remaja.</div>
+  <div class="form-group"><label>Tema kelompok</label><select name="tema"><option value="">Pilih...</option><option>Berfoya-foya</option><option>Riya</option><option>Sum’ah</option><option>Takabur</option><option>Hasad</option></select></div>
+  <div class="form-group"><label>Contoh kasus kelompok</label><textarea name="d1"></textarea></div>
+  <div class="form-group"><label>Mengapa perilaku itu bisa muncul?</label><textarea name="d2"></textarea></div>
+  <div class="form-group"><label>Dampaknya bagi diri sendiri</label><textarea name="d3"></textarea></div>
+  <div class="form-group"><label>Dampaknya bagi orang lain</label><textarea name="d4"></textarea></div>
+  <div class="form-group"><label>Bagaimana ajaran Islam mengarahkan kita untuk menghindarinya?</label><textarea name="d5"></textarea></div>
+  <div class="form-group"><label>Solusi yang realistis dilakukan remaja</label><textarea name="d6"></textarea></div>
+  <h3>3 poin penting saat presentasi</h3>
+  <div class="form-group"><label>Poin 1</label><textarea name="d7" style="min-height:90px"></textarea></div>
+  <div class="form-group"><label>Poin 2</label><textarea name="d8" style="min-height:90px"></textarea></div>
+  <div class="form-group"><label>Poin 3</label><textarea name="d9" style="min-height:90px"></textarea></div>
+</section>
+
+<section class="card" id="tantangan">
+  <div class="section-head"><div class="section-letter">G</div><div><h2>Aktivitas 4 — Tantangan</h2></div></div>
+  <p>Pilih satu kasus. Jadilah “konsultan perilaku”.</p>
+  <div class="choice-grid">
+    <label class="choice"><input type="radio" name="tantangan" value="A"> A. Membeli barang tren agar dianggap keren.</label>
+    <label class="choice"><input type="radio" name="tantangan" value="B"> B. Beribadah tetapi suka menceritakan ibadahnya.</label>
+    <label class="choice"><input type="radio" name="tantangan" value="C"> C. Membanggakan prestasi dan merendahkan teman.</label>
+    <label class="choice"><input type="radio" name="tantangan" value="D"> D. Tidak senang saat teman sukses.</label>
+  </div>
+  <div class="form-group"><label>Perilaku yang perlu diperbaiki</label><textarea name="t1"></textarea></div>
+  <div class="form-group"><label>Penyebab perilaku tersebut</label><textarea name="t2"></textarea></div>
+  <div class="form-group"><label>Dampak jika dibiarkan</label><textarea name="t3"></textarea></div>
+  <div class="form-group"><label>Perubahan yang seharusnya dilakukan</label><textarea name="t4"></textarea></div>
+  <div class="form-group"><label>Kalimat nasihat yang akan kamu sampaikan</label><textarea name="t5"></textarea></div>
+  <div class="form-group"><label>Slogan kelompok</label><input name="slogan" type="text" placeholder="Tulis slogan singkat..."></div>
+</section>
+
+<section class="card" id="refleksi">
+  <div class="section-head"><div class="section-letter">H</div><div><h2>Refleksi Pribadi</h2><div class="muted small">Tidak perlu diumumkan kepada teman. Jawablah jujur.</div></div></div>
+  <div class="form-group">
+    <label>1. Perilaku mana yang paling mudah muncul pada remaja?</label>
+    <div class="choice-grid two">
+      <label class="choice"><input type="radio" name="r1" value="Berfoya-foya">Berfoya-foya</label>
+      <label class="choice"><input type="radio" name="r1" value="Riya">Riya</label>
+      <label class="choice"><input type="radio" name="r1" value="Sum'ah">Sum’ah</label>
+      <label class="choice"><input type="radio" name="r1" value="Takabur">Takabur</label>
+      <label class="choice"><input type="radio" name="r1" value="Hasad">Hasad</label>
+    </div>
+  </div>
+  <div class="form-group"><label>2. Mengapa?</label><textarea name="r2"></textarea></div>
+  <div class="form-group"><label>3. Pernahkah saya melakukan atau hampir melakukan perilaku tersebut?</label><textarea name="r3"></textarea></div>
+  <div class="form-group">
+    <label>4. Apa pemicu yang biasanya membuat perilaku itu muncul?</label>
+    <div class="choice-grid">
+      <label class="choice"><input type="checkbox" name="pemicu" value="Ingin dipuji">Ingin dipuji</label>
+      <label class="choice"><input type="checkbox" name="pemicu" value="Ingin dianggap keren">Ingin dianggap keren</label>
+      <label class="choice"><input type="checkbox" name="pemicu" value="Ingin terlihat sukses">Ingin terlihat sukses</label>
+      <label class="choice"><input type="checkbox" name="pemicu" value="Takut tertinggal">Takut tertinggal</label>
+      <label class="choice"><input type="checkbox" name="pemicu" value="Merasa lebih hebat">Merasa lebih hebat</label>
+      <label class="choice"><input type="checkbox" name="pemicu" value="Iri">Iri kepada orang lain</label>
+      <label class="choice"><input type="checkbox" name="pemicu" value="Media sosial">Pengaruh media sosial</label>
+    </div>
+    <input name="pemicuLain" type="text" placeholder="Pemicu lainnya..." style="margin-top:9px">
+  </div>
+  <div class="form-group"><label>5. Apa yang ingin saya ubah dari diri saya?</label><textarea name="r5"></textarea></div>
+  <div class="form-group"><label>6. Kebiasaan kecil yang akan saya mulai minggu ini</label><textarea name="r6" placeholder="Saya akan..."></textarea></div>
+  <div class="form-group"><label>7. Ketika melihat teman mendapat keberhasilan, saya akan...</label><textarea name="r7"></textarea></div>
+  <div class="form-group"><label>8. Ketika ingin membeli sesuatu, saya akan...</label><textarea name="r8"></textarea></div>
+  <div class="form-group"><label>9. Ketika melakukan kebaikan, saya akan berusaha...</label><textarea name="r9"></textarea></div>
+</section>
+
+<section class="card" id="kesimpulan">
+  <div class="section-head"><div class="section-letter">I</div><div><h2>Kesimpulan</h2></div></div>
+  <div class="form-group"><label>Berfoya-foya adalah...</label><textarea name="k1"></textarea></div>
+  <div class="form-group"><label>Riya adalah...</label><textarea name="k2"></textarea></div>
+  <div class="form-group"><label>Sum’ah adalah...</label><textarea name="k3"></textarea></div>
+  <div class="form-group"><label>Takabur adalah...</label><textarea name="k4"></textarea></div>
+  <div class="form-group"><label>Hasad adalah...</label><textarea name="k5"></textarea></div>
+  <div class="form-group"><label>Inti pelajaran hari ini menurut saya...</label><textarea name="k6"></textarea></div>
+  <div class="form-group"><label>Pesan yang paling saya ingat</label><textarea name="pesan"></textarea></div>
+</section>
+
+<section class="card" id="penilaian">
+  <div class="section-head"><div class="section-letter">J</div><div><h2>Penilaian / Rubrik</h2></div></div>
+  <div class="callout small">
+    <b>Individu:</b> pemahaman konsep, analisis kasus, berpikir kritis, refleksi diri, kerapian/kelengkapan. Masing-masing skala 1–4.<br><br>
+    <b>Kelompok:</b> ketepatan kasus 20%, analisis 25%, keaktifan 20%, solusi 20%, kreativitas 15%.
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-head"><div class="section-letter">✓</div><div><h2>Satu Pertanyaan untuk Dibawa Pulang</h2></div></div>
+  <div class="callout"><b>Setelah belajar hari ini, perilaku apa yang paling ingin kamu jaga dalam dirimu? Mengapa?</b></div>
+  <textarea name="penutup" placeholder="Tulis jawabanmu di sini..."></textarea>
+</section>
+
+</main>
+
+<div id="status" class="status"></div>
+
+<div class="sticky-actions">
+  <div class="actions">
+    <button class="btn primary" id="save">💾 Simpan</button>
+    <button class="btn secondary" id="print">🖨️ Cetak/PDF</button>
+    <button class="btn secondary" id="export">⬇️ Export</button>
+    <button class="btn danger" id="reset">↺ Reset</button>
+  </div>
+</div>
+
+<footer>LKPD PAI-BP Kelas X • Versi nyaman untuk HP</footer>
+
+<script>
+const KEY="lkpd-pai-mobile-v2";
+
+function groupedValue(el){
+  if(el.type==="radio"){
+    const x=document.querySelector('input[name="'+CSS.escape(el.name)+'"]:checked');
+    return x?x.value:"";
+  }
+  if(el.type==="checkbox"){
+    return [...document.querySelectorAll('input[name="'+CSS.escape(el.name)+'"]:checked')].map(x=>x.value);
+  }
+  return el.value||"";
+}
+
+function collect(){
+  const data={}, seen=new Set();
+  document.querySelectorAll("[name]").forEach(el=>{
+    if(seen.has(el.name)) return;
+    seen.add(el.name);
+    data[el.name]=groupedValue(el);
+  });
+  return data;
+}
+
+function restore(data){
+  Object.entries(data||{}).forEach(([name,val])=>{
+    const group=[...document.querySelectorAll('[name="'+CSS.escape(name)+'"]')];
+    if(!group.length) return;
+    const first=group[0];
+    if(first.type==="radio") group.forEach(x=>x.checked=x.value===val);
+    else if(first.type==="checkbox") group.forEach(x=>x.checked=Array.isArray(val)&&val.includes(x.value));
+    else first.value=val??"";
+  });
+}
+
+function save(show=true){
+  localStorage.setItem(KEY,JSON.stringify({savedAt:new Date().toISOString(),data:collect()}));
+  if(show) showStatus("Jawaban tersimpan di HP ini.");
+}
+
+function showStatus(msg){
+  const s=document.getElementById("status");
+  s.textContent=msg;s.style.display="block";
+  clearTimeout(window.__st);window.__st=setTimeout(()=>s.style.display="none",2400);
+}
+
+function progress(){
+  const names=[...new Set([...document.querySelectorAll("[name]")].map(x=>x.name))];
+  let done=0;
+  names.forEach(n=>{
+    const val=groupedValue(document.querySelector('[name="'+CSS.escape(n)+'"]'));
+    if(Array.isArray(val)?val.length:(""+val).trim()) done++;
+  });
+  const p=Math.round(done/names.length*100);
+  document.getElementById("pct").textContent=p+"%";
+  document.getElementById("bar").style.width=p+"%";
+}
+
+document.addEventListener("input",()=>{progress();clearTimeout(window.__auto);window.__auto=setTimeout(()=>save(false),900)});
+document.addEventListener("change",()=>{progress();save(false)});
+
+document.getElementById("save").onclick=()=>save(true);
+document.getElementById("print").onclick=()=>{save(false);window.print()};
+document.getElementById("export").onclick=()=>{
+  const d=collect(),blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),data:d},null,2)],{type:"application/json"});
+  const a=document.createElement("a"),url=URL.createObjectURL(blob);
+  a.href=url;a.download="LKPD_PAI_"+(d.nama||"siswa").replace(/[^a-z0-9_-]/gi,"_")+".json";a.click();URL.revokeObjectURL(url);
+};
+document.getElementById("reset").onclick=()=>{
+  if(!confirm("Hapus semua jawaban?")) return;
+  document.querySelectorAll("[name]").forEach(el=>{
+    if(el.type==="radio"||el.type==="checkbox") el.checked=false; else el.value="";
+  });
+  localStorage.removeItem(KEY);progress();showStatus("Semua jawaban dihapus.");
+};
+
+try{
+  const saved=JSON.parse(localStorage.getItem(KEY)||"null");
+  if(saved&&saved.data) restore(saved.data);
+}catch(e){}
+progress();
+
+const links=[...document.querySelectorAll(".nav a")], sections=[...document.querySelectorAll("main .card[id]")];
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){
+    links.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+e.target.id));
+  }});
+},{rootMargin:"-35% 0px -55% 0px"});
+sections.forEach(s=>obs.observe(s));
+</script>
 </body>
 </html>
